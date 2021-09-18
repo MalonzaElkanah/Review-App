@@ -1,0 +1,421 @@
+{% extends "reviews/base.html" %}
+
+{% load static %}
+
+{% block title %} Business Reviews {% endblock %}
+        
+{% block content %}
+<main class="main-index">
+	<!-- Breadcrumb and Title Section -->
+	<div class="b-example-divider"> </div>
+	<div class="container-fluid card pt-5">
+		<div class="card-body">
+			<div class="container">
+				<nav aria-label="breadcrumb">
+				  	<ol class="breadcrumb">
+				    	<li class="breadcrumb-item"><a href="#">Home</a></li>
+				    	<li class="breadcrumb-item"><a href="#">Categories</a></li>
+				    	<li class="breadcrumb-item"><a href="#">Banks</a></li>
+				    	<li class="breadcrumb-item active" aria-current="page">Diamond Trust Bank</li>
+				  	</ol>
+				</nav>
+				<div class="row">
+					<div class="col-8">
+						<div class="row">
+							<div class="col-3">
+								<img src="{% static 'main/images/pr1.jpg' %}" class="img-thumbnail" alt="...">
+							</div>
+							<div class="col-8">
+								<h1>Diamond Trust Banks</h1>
+								<p class="text-muted">Reviews 456 | <span>Excellent</span></p>
+								
+								<div class="d-flex">
+		                            <i class="fas fa-star fa-3x text-success"></i>
+		                            <i class="fas fa-star fa-3x text-success"></i>
+		                            <i class="fas fa-star fa-3x text-success"></i>
+		                            <i class="fas fa-star fa-3x text-success"></i>
+		                            <i class="fas fa-star fa-3x text-success"></i>
+		                            <p class="ms-2 text-muted"> 4.5</p>
+		                        </div>
+							</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<ul class="list-group">
+							<li class="list-group-item d-flex justify-content-between">
+							    <div class="ms-2 me-auto">
+							      <div class="fw-bold">dtbank.com <i class="fas fa-globe text-muted"></i></div>
+							      vist this website
+							    </div>
+							</li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Breadcrumb and Title Section End -->
+
+	<!-- Content Section Start -->
+	<div class="b-example-divider"> </div>
+	<div class="container">
+		<div class="row">
+			<!-- Reviews Section Start -->
+			<div class="col-8">
+				<div class="row card">
+					<div class="card-body d-flex justify-content-between p-4">
+						<div class="d-flex align-items-center">
+
+							<i class="fas fa-user-circle fa-3x text-muted"></i>
+							<a href="#" class="ms-3">Write a review</a>
+						</div>
+						<div class="d-flex">
+	                        <i class="far fa-star fa-3x text-muted"></i>
+	                        <i class="far fa-star fa-3x text-muted"></i>
+	                        <i class="far fa-star fa-3x text-muted"></i>
+	                        <i class="far fa-star fa-3x text-muted"></i>
+	                        <i class="far fa-star fa-3x text-muted"></i>
+	                    </div>
+						
+					</div>
+				</div>
+
+				<div class="row card mt-3">
+					<div class="card-body">
+
+						<div class="row d-flex justify-content-between">
+							<h5 class="col ms-2">Reviews <span class="text-muted">456</span></h5>
+							<div class="col d-flex align-items-center">
+								<label>Filter by: </label>
+								<a href="#" class="btn btn-outline-dark ms-2">Rating <i class="fas fa-plus-circle"></i></a>
+								<a href="#" class="btn btn-outline-dark">English <i class="fas fa-chevron-circle-right"></i></a>
+							</div>
+						</div>
+
+						<div class="row ms-2 pt-3">
+							<div class="row align-items-center">
+								<div class="form-check col-2">
+								  	<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+								  	<label class="form-check-label" for="inlineCheckbox1">Excellent</label>
+								</div>
+								<div class="progress col-8" style="height: 10px;">
+								  <div class="progress-bar" role="progressbar" style="width: 94%;" aria-valuenow="94" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div class="col-1">94%</div>
+							</div>
+							<div class="row align-items-center pt-2">
+								<div class="form-check col-2">
+								  	<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+								  	<label class="form-check-label" for="inlineCheckbox2">Great</label>
+								</div>
+								<div class="progress col-8" style="height: 10px;">
+									<div class="progress-bar" role="progressbar" style="width: 6%;" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div class="col-1">
+									6%
+								</div>
+							</div>
+							<div class="row align-items-center pt-2">
+								<div class="form-check col-2">
+								  	<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2">
+								  	<label class="form-check-label" for="inlineCheckbox3"> Average</label>
+								</div>
+								<div class="progress col-8" style="height: 10px;">
+									<div class="progress-bar" role="progressbar" style="width: 1%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div class="col-1">
+									<1%
+								</div>
+							</div>
+							<div class="row align-items-center pt-2">
+								<div class="form-check col-2">
+								  	<input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
+								  	<label class="form-check-label" for="inlineCheckbox4"> Poor</label>
+								</div>
+								<div class="progress col-8" style="height: 10px;">
+									<div class="progress-bar" role="progressbar" style="width: 1%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div class="col-1">
+									<1%
+								</div>
+							</div>
+							<div class="row align-items-center pt-2">
+
+								<div class="form-check col-2">
+								  	<input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
+								  	<label class="form-check-label" for="inlineCheckbox4"> Bad</label>
+								</div>
+								<div class="progress col-8" style="height: 10px;">
+									<div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div class="col-1">
+									0%
+								</div>
+							</div>
+						</div>
+
+						<div class="row ms-2 pt-5">
+							<div class="d-grid gap-2 d-md-block">
+								<a href="#" class="btn btn-secondary mb-3">All Reviews</a>
+								<a href="#" class="btn btn-outline-dark mb-3">Customer Service</a>
+								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
+								<a href="#" class="btn btn-outline-dark mb-3">Quality</a>
+								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
+								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
+								<a href="#" class="btn btn-outline-dark mb-3">Quality</a>
+								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
+								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
+								<a href="#" class="btn btn-outline-dark mb-3">Quality</a>
+								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="row mt-3 card">
+					<div class="card-body p-4">
+						<div class="row">
+							<div class="d-flex">
+                                <img src="{% static 'main/images/profiles/avatar-8.jpg' %}" class="rounded-circle float-start" width="50px" height="50px" alt="e">
+                                <div class="px-3">
+                                	<div>John Terry</div>
+                                	<div class="d-flex">
+                                		<small>
+                                			<i class="fas fa-pen"></i> 
+                                			<span class="text-muted">2 reviews </span>
+                                			<i class="fas fa-map-marker-alt ps-2"></i> 
+                                			<span class="text-muted"> Nairobi, Ke</span>
+                                		</small>
+                                	</div>
+                                </div>
+                            </div>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row">
+							<div class="row justify-content-between">
+								<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                </div>
+                                <div class="col text-end text-muted">2 Hours Ago</div>
+							</div>
+						</div>
+						<div class="row pt-2">
+							<h5 class="card-title">Card title</h5>
+							<p class="card-text">Great products, My dog never liked supplements and medicines, but now gladly takes them. The delivery and packaging is also satisfactory. Would surely recommend. </p>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row justify-content-between text-muted pt-0">
+							<div class="col">
+								<small>
+									<i class="far fa-thumbs-up"></i> Helpful
+									<i class="fas fa-share-alt ms-2"></i> Share
+								</small>
+							</div>
+							<div class="col text-end">
+								<small>
+									<i class="far fa-flag"></i> Report
+								</small>
+							</div>
+							
+						</div>
+						<a class="stretched-link" href="{% url 'business-reviews' %}"></a>
+					</div>
+				</div>
+
+
+				<div class="row mt-3 card">
+					<div class="card-body p-4">
+						<div class="row">
+							<div class="d-flex">
+                                <img src="{% static 'main/images/profiles/avatar-8.jpg' %}" class="rounded-circle float-start" width="50px" height="50px" alt="e">
+                                <div class="px-3">
+                                	<div>John Terry</div>
+                                	<div class="d-flex">
+                                		<small>
+                                			<i class="fas fa-pen"></i> 
+                                			<span class="text-muted">2 reviews </span>
+                                			<i class="fas fa-map-marker-alt ps-2"></i> 
+                                			<span class="text-muted"> Nairobi, Ke</span>
+                                		</small>
+                                	</div>
+                                </div>
+                            </div>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row">
+							<div class="row justify-content-between">
+								<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                </div>
+                                <div class="col text-end text-muted">2 Hours Ago</div>
+							</div>
+						</div>
+						<div class="row pt-2">
+							<h5 class="card-title">Card title</h5>
+							<p class="card-text">Great products, My dog never liked supplements and medicines, but now gladly takes them. The delivery and packaging is also satisfactory. Would surely recommend. </p>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row justify-content-between text-muted pt-0">
+							<div class="col">
+								<small>
+									<i class="far fa-thumbs-up"></i> Helpful
+									<i class="fas fa-share-alt ms-2"></i> Share
+								</small>
+							</div>
+							<div class="col text-end">
+								<small>
+									<i class="far fa-flag"></i> Report
+								</small>
+							</div>
+							
+						</div>
+						<a class="stretched-link" href="{% url 'business-reviews' %}"></a>
+					</div>
+				</div>
+
+
+				<div class="row mt-3 card">
+					<div class="card-body p-4">
+						<div class="row">
+							<div class="d-flex">
+                                <img src="{% static 'main/images/profiles/avatar-8.jpg' %}" class="rounded-circle float-start" width="50px" height="50px" alt="e">
+                                <div class="px-3">
+                                	<div>John Terry</div>
+                                	<div class="d-flex">
+                                		<small>
+                                			<i class="fas fa-pen"></i> 
+                                			<span class="text-muted">2 reviews </span>
+                                			<i class="fas fa-map-marker-alt ps-2"></i> 
+                                			<span class="text-muted"> Nairobi, Ke</span>
+                                		</small>
+                                	</div>
+                                </div>
+                            </div>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row">
+							<div class="row justify-content-between">
+								<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                </div>
+                                <div class="col text-end text-muted">2 Hours Ago</div>
+							</div>
+						</div>
+						<div class="row pt-2">
+							<h5 class="card-title">Card title</h5>
+							<p class="card-text">Great products, My dog never liked supplements and medicines, but now gladly takes them. The delivery and packaging is also satisfactory. Would surely recommend. </p>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row justify-content-between text-muted pt-0">
+							<div class="col">
+								<small>
+									<i class="far fa-thumbs-up"></i> Helpful
+									<i class="fas fa-share-alt ms-2"></i> Share
+								</small>
+							</div>
+							<div class="col text-end">
+								<small>
+									<i class="far fa-flag"></i> Report
+								</small>
+							</div>
+							
+						</div>
+						<a class="stretched-link" href="{% url 'business-reviews' %}"></a>
+					</div>
+				</div>
+
+				<div class="b-example-divider"> </div>
+
+
+			</div>
+			<!-- /Reviews Section End -->
+
+			<!-- Business-Info Section Start -->
+			<div class="col-4">
+				<div class="card">
+					<div class="card-body">
+						<div class="row pt-2">
+							<div class="col-12">
+								<h5>All About DT Bank</h5>
+							</div>
+							<div class="col-12 text-muted pt-0">
+								<small class="pt-0">
+									Information provided by various external sources
+								</small>
+							</div>
+							<div class="col-12 pt-2">
+								<p>We offer unique hemp infused pet products for dogs an cats: pet hemp oils, hemp infused calming treats, hemp infused natural shampoos for dogs, pet snacks, dog and cat natural snacks, and more!</p>
+							</div>
+						</div>
+						<hr>
+						<div class="row pt-4">
+							<div class="col-12">
+								<h5>Contacts</h5>
+							</div>
+							<div class="col-12 text-muted">
+								<p>
+									<i class="fas fa-at"></i> 
+									<a href="#" class="ms-3">businessfulani@gmail.com</a>
+								</p>
+								<p>
+									<i class="fas fa-phone-alt"></i> 
+									<a href="#" class="ms-3">0715323544</a>
+								</p>
+								<p>
+									<i class="fas fa-map-marker-alt"></i> 
+									<a href="#" class="ms-3">Nairobi, Kenya</a>
+								</p>
+							</div>
+						</div>
+						<hr>
+
+						<div class="row pt-4">
+							<div class="col-12">
+								<h5>Category</h5>
+							</div>
+							<div class="col-12">
+								<p>
+									<strong>Petals and Tails</strong> is 
+									<strong>2 out of 60 ranked</strong> companies in the 
+									<a href="#">category Bank</a> on Trustpilot
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Business-Info Section End -->
+
+		</div>
+		</div>
+	</div>
+	<!-- /Content Section Start -->
+
+</main>
+{% endblock %}

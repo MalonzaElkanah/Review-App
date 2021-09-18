@@ -17,7 +17,11 @@
   height: 3rem;
   background-color: transparent;
 }
-
+.reviews-divider {
+  height: 2rem;
+  background-color: transparent;
+  content: " ";
+}
 
 /* * * * * *  Index Page  * * * * * */
 .main-index {
@@ -101,3 +105,31 @@
   }
 }
 
+
+/* *  2: Sign-in Page  * */
+.main-login {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.main-login .checkbox {
+  font-weight: 400;
+}
+
+.main-login .form-floating:focus-within {
+  z-index: 2;
+}
+
+.main-login input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.main-login input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

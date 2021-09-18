@@ -1,0 +1,224 @@
+{% extends "reviews/base.html" %}
+
+{% load static %}
+
+{% block title %} Bank Reviews {% endblock %}
+        
+{% block content %}
+<main class="main-index">
+	<!-- Breadcrumb and Title Section -->
+	<div class="b-example-divider"> </div>
+	<div class="container-fluid card pt-5">
+		<div class="card-body">
+			<div class="container">
+				<nav aria-label="breadcrumb">
+				  	<ol class="breadcrumb">
+				    	<li class="breadcrumb-item"><a href="#">Home</a></li>
+				    	<li class="breadcrumb-item active" aria-current="page">Categories</li>
+				  	</ol>
+				</nav>
+				<div class="row">
+					<h1>Best in Banks</h1>
+					<p class="text-muted">Top-rated businesses in Bank Category <i class="fas fa-info-circle"></i></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Breadcrumb and Title Section End -->
+
+	<!-- Content Section Start -->
+	<div class="b-example-divider"> </div>
+	<div class="container">
+		<div class="row">
+
+			<!-- Side-Bar Section Start -->
+			<div class="col-4">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-12">
+								<h3>Categories</h3>
+							</div>
+							<div class="col-12">
+								<ul class="list-group">
+									<li class="list-group-item">Banks</li>
+									<li class="list-group-item">Hospitals</li>
+								</ul>
+							</div>
+						</div>
+						<div class="b-example-divider"> </div>
+
+						<div class="row">
+							<div class="col-8">
+								<h5>Filters</h5>
+							</div>
+							<div class="col-4">
+								<p class="text-muted">
+									<a href="">Reset filters</a>
+								</p>
+							</div>
+							<div class="col-12 pb-5">
+								<div class="mb3 pb-3">
+									<label  for="region-input" class="form-label"> County or Town</label>
+									<input id="region-input" class="form-control" type="text" name="region">
+								</div>
+								<button class="btn btn-outline-dark" type="search"> Apply</button>
+							</div>
+							<div class="col-12 pb-5">
+								<div class="mb3">
+									<label  for="region-input" class="form-label">No. of Reviews</label>
+									<div class="form-check pb-2">
+									  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+									  	<label class="form-check-label text-muted" for="flexRadioDefault1">
+									    	All
+									  	</label>
+									</div>
+									<div class="form-check pb-2">
+									  	<input class="form-check-input" type="radio" name="flexRadioDefault text-muted" id="flexRadioDefault2" checked>
+									  	<label class="form-check-label text-muted" for="flexRadioDefault2">
+									    	25+
+									  	</label>
+									</div>
+									<div class="form-check pb-2">
+									  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+									  	<label class="form-check-label text-muted" for="flexRadioDefault1">
+									    	50+
+									  	</label>
+									</div>
+									<div class="form-check pb-2">
+									  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+									  	<label class="form-check-label text-muted" for="flexRadioDefault1">
+									    	100+
+									  	</label>
+									</div>
+									<div class="form-check pb-2">
+									  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+									  	<label class="form-check-label text-muted" for="flexRadioDefault1">
+									    	250+
+									  	</label>
+									</div>
+									<div class="form-check">
+									  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+									  	<label class="form-check-label text-muted" for="flexRadioDefault1">
+									    	500+
+									  	</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 pb-5">
+								<div class="mb3">
+									<label  for="region-input" class="form-label">Time Period</label>
+									<div class="form-check pb-2">
+									  	<input class="form-check-input" type="radio" name="flexRadio" id="flexRadio1">
+									  	<label class="form-check-label text-muted" for="flexRadio1">
+									    	All Time
+									  	</label>
+									</div>
+									<div class="form-check pb-2">
+									  	<input class="form-check-input" type="radio" name="flexRadio text-muted" id="flexRadio2" checked>
+									  	<label class="form-check-label text-muted" for="flexRadio2">
+									    	6 Months
+									  	</label>
+									</div>
+									<div class="form-check pb-2">
+									  	<input class="form-check-input" type="radio" name="flexRadio" id="flexRadio3">
+									  	<label class="form-check-label text-muted" for="flexRadio3">
+									    	12 Months
+									  	</label>
+									</div>
+									<div class="form-check pb-2">
+									  	<input class="form-check-input" type="radio" name="flexRadio" id="flexRadio3">
+									  	<label class="form-check-label text-muted" for="flexRadio3">
+									    	18 Months
+									  	</label>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Side-Bar Section Ends -->
+
+			<!-- Reviews Section Start -->
+			<div class="col-8">
+				<div class="row">
+					<h5>Top-rated companies</h5>
+					<p class="text-muted">Showing 1-20 of 58 results based on current filters. Ordered by Biz</p>						
+				</div>
+				<div class="row card">
+					<div class="card-body">
+						
+						<div class="row">
+							<div class="col-3">
+								<img src="{% static 'main/images/pr1.jpg' %}" class="img-thumbnail" alt="...">
+							</div>
+							<div class="col-9">
+								<div class="row">
+									<h5>Diamond Trust Bank </h5>
+								</div>
+								<div class="row d-flex">
+									<div class="d-flex">
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <p class="ms-2"> 2345 reviews</p> 
+                                        <p class="ms-2"> Average Rate 4.5</p>
+                                    </div>
+								</div>
+								<div class="row">
+									<p>Bank</p>
+								</div>
+								<div class="row">
+									<p class="text-muted"><i class="fas fa-map-marker-alt"></i> CBD Nairobi, Kenya</p>
+								</div>
+							</div>
+						</div>
+						<a class="stretched-link" href="{% url 'business-reviews' %}"></a>
+					</div>
+				</div>
+				<div class="row mt-3 card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-3">
+								<img src="{% static 'main/images/pr1.jpg' %}" class="img-thumbnail" alt="...">
+							</div>
+							<div class="col-9">
+								<div class="row">
+									<h5>Diamond Trust Bank </h5>
+								</div>
+								<div class="row d-flex">
+									<div class="d-flex">
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <p class="ms-2"> 2345 reviews . Average Rate 4.5</p>
+                                    </div>
+								</div>
+								<div class="row">
+									<p>Bank</p>
+								</div>
+								<div class="row">
+									<p class="text-muted"><i class="fas fa-map-marker-alt"></i> CBD Nairobi, Kenya</p>
+								</div>
+							</div>
+						</div>
+						<a class="stretched-link" href="{% url 'business-reviews' %}"></a>
+					</div>
+				</div>
+
+			</div>
+			<!-- Reviews Section Start -->
+
+		</div>
+	</div>
+	<!-- /Content Section Ends -->
+	<div class="b-example-divider"> </div>
+</main>
+{% endblock %}

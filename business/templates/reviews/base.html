@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Frameworks CSS -->
+        <link href="{% static 'main/bundles/bootstrap-5.1.1-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'main/bundles/fontawesome-free-5.15.4-web/css/all.css' %}" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{% static 'main/css/style.css' %}" rel="stylesheet">
+
+        <!-- Page-Specific CSS -->
+        {% block css %}
+
+        {% endblock %}
+
+        <title>Biz Reviews: {% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <!-- Naviigation Section Start  -->
+        <nav class="navbar navbar-expand-md fixed-top navbar-dark mb-5" style="background-color: #000032">
+            <div class="container-fluid">
+                <a class="navbar-brand ms-5 p-3" href="#">
+                <img src="{% static 'main/images/bootstrap-logo.svg' %}" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                Biz-Views
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-start">
+                    <form class="d-flex">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    </form>
+                </div>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+                    <ul class="navbar-nav me-5">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Categories</a>
+                        </li>
+                        <li class="nav-item ms-5">
+                            <a class="btn btn-outline-success" href="{% url 'login' %}" >Login/Sign-Up</a>
+                        </li>
+                    </ul>
+                </div>
+                 
+            </div>
+        </nav>
+        <!-- /Naviigation Section Ends  -->
+
+        <!-- Content Section Starts  -->
+        {% block content %}
+
+        {% endblock %}
+        <!-- /Content Section Ends  -->
+
+        <!-- /Footer Section Start -->
+        <div class="container-fluid" style="background-color: #000032">
+            <footer class="py-5">
+                <div class="row">
+                    <div class="col-2 ms-4">
+                        <h5 class="footer-head">About</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2">
+                                <a href="{% url 'index' %}" class="nav-link p-0 text-muted">Home</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-muted">Features</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-muted">Pricing</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-muted">FAQs</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-muted">About</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-2">
+                        <h5 class="footer-head">Review</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-2">
+                        <h5 class="footer-head">Business</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-4 offset-1">
+                        <form>
+                            <h5 class="footer-head">Subscribe to our newsletter</h5>
+                            <p class="footer-p">Monthly digest of whats new and exciting from us.</p>
+                            <div class="d-flex w-100 gap-2">
+                                <label for="newsletter1" class="visually-hidden">Email address</label>
+                                <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
+                                <button class="btn btn-primary" type="button">Subscribe</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between py-4 my-4 border-top">
+                    <p class="footer-p">&copy; 2021 Company, Inc. All rights reserved.</p>
+                    <ul class="list-unstyled d-flex">
+                        <li class="ms-3"><a class="text-muted" href="#">
+                            <i class="fab fa-twitter" width="24" height="24"></i>
+                        </a></li>
+                        <li class="ms-3"><a class="text-muted" href="#">
+                            <i class="fab fa-facebook"></i>
+                        </a></li>
+                        <li class="ms-3"><a class="text-muted" href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a></li>
+                    </ul>
+                </div>
+          </footer>
+        </div>
+        <!-- /Footer Section Ends -->
+
+        <!-- Frameworks JS -->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script> -->
+        <script src="{% static 'main/js/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'main/bundles/bootstrap-5.1.1-dist/js/bootstrap.min.js' %}"></script>
+
+        <!-- Page-Specific JS -->
+        {% block javascript %}
+
+        {% endblock %}
+        <script type="text/javascript">
+            var myCarousel = document.querySelector('#carouselReviews');
+            var carousel = new bootstrap.Carousel(myCarousel, {
+              interval: 10,
+            });
+
+        </script>
+    </body>
+</html>
