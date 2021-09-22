@@ -1,0 +1,122 @@
+{% extends "reviews/base.html" %}
+
+{% load static %}
+
+{% block title %} Profile Settings {% endblock %}
+        
+{% block content %}   
+	<main class="main-index">
+	<!-- Breadcrumb and Title Section -->
+	<div class="b-example-divider"> </div>
+	<div class="container-fluid card pt-5">
+		<div class="card-body">
+			<div class="container">
+				<nav aria-label="breadcrumb">
+				  	<ol class="breadcrumb">
+				    	<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+				    	<li class="breadcrumb-item active" aria-current="page">Profile Settings</li>
+				  	</ol>
+				</nav>
+				<div class="row">
+					<div class="col-6">
+						<div class="row">
+							<div class="col-3">
+								<img src="{% static 'main/images/profiles/avatar-2.jpg' %}" class="img-thumbnail" alt="...">
+							</div>
+							<div class="col-9">
+								<h1>{{user.username}}</h1>
+								<p class="text-muted">Reviews 456 </p>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row">
+							<div class="col-4">
+								<h2>0</h2>
+								<p>
+									<i class="fas fa-star"></i> 
+									<strong>Reviews</strong> 
+								</p>
+							</div>
+
+							<div class="col-4">
+								<h2>0</h2>
+								<p>
+									<i class="fas fa-user-circle"></i> 
+									<strong>Reads</strong> 
+								</p>
+							</div>
+
+							<div class="col-4">
+								<h2>0</h2>
+								<p>
+									<i class="fas fa-thumbs-up"></i> 
+									<strong>Useful</strong> 
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Breadcrumb and Title Section End -->
+
+	<!-- Content Section Start -->
+	<div class="b-example-divider"> </div>
+	<div class="container-fluid">
+		<div class="row card">
+			<div class="card-body">
+
+				<form class="container" method="post" action="{% url 'update-user' %}" enctype="multipart/form-data">
+					<div class="row pb-4">
+						<div class="col-12">
+							<h3>Profile Settings</h3>
+							<p class="text-muted">Your Profile Settings</p>
+						</div>
+					</div>
+					{% csrf_token %}
+					<input type="hidden" name="user" value="{{user.id}}">
+					<div class="row pb-4">	
+						<div class="col-6">
+							<label for="imageFile" class="form-label">Profile Image</label>
+						{% for field in form %}
+							{% if field.name == 'image' %}
+								{{field}}
+							{% endif %}
+						{% endfor %}
+						</div>	
+					</div>
+					<div class="row">
+						<div class="col-6 pb-4">
+							<label for="emailField" class="form-label">Email</label>
+							<input type="email" name="email" id="emailField" class="form-control" value="{{user.email}}" required="">
+						</div>
+						<div class="col-6 pb-4">
+							<label for="nameField" class="form-label">Display Name</label>
+							<input type="text" name="name" id="nameField" class="form-control" value="{{user.username}}" required="">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6 pb-4">
+							<label for="languageField" class="form-label">Language</label>
+							<select id="languageField" class="form-control" name="language">
+								<option value="{{profile.language}}" selected="">{{profile.language}}</option>
+								<option value="English">English</option>
+								<option value="Swahili">Swahili</option>
+								<option value="Others">Others</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6">
+							<button type="submit" class="btn btn-primary">UPDATE INFOMATION</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+		
+	</main>
+{% endblock %}

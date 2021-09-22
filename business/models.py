@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class UserProfile(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	image = models.ImageField('Profile Image', upload_to='Image/Settings/ProfileImages', 
+		max_length=500, default='dummy.png')
+	language = models.CharField('Langauge', default='English', max_length=50)
+
+
 class Category(models.Model):
 	name = models.CharField('Name', max_length=200)
 	date_created = models.DateTimeField('Date Created', auto_now_add=True)

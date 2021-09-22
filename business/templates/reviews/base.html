@@ -44,9 +44,23 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Categories</a>
                         </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown ms-5">
+                            <a class="nav-link dropdown-toggle link-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% static 'main/images/profiles/avatar-2.jpg' %}" alt="" width="30" height="30" class="rounded-circle d-inline-block"><span class="ms-2 text-light">{{user.first_name}}</span> 
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">My Reviews</a></li>
+                                <li><a class="dropdown-item" href="#">My Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Log-Out</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
                         <li class="nav-item ms-5">
                             <a class="btn btn-outline-success" href="{% url 'login' %}" >Login/Sign-Up</a>
                         </li>
+                    {% endif %}
                     </ul>
                 </div>
                  

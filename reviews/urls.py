@@ -26,6 +26,7 @@ urlpatterns = [
     #path('', views_main.index, name='index'),
     path('logout/', LogoutView.as_view(template_name=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path('manage/', views.manage, name='manage'),
+    path('update/user-details/', views.update_details, name='update-user'),
 
     path('', views.index, name='index'),
     path('login/', views.login, name='login'),
