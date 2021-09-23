@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 
 from business.models import Category, Business, Review, UserProfile
 from business.forms import UserProfileForm
+from . import settings
 
 # Create your views here.
-# import google.oauth2.credentials
-# import google_auth_oauthlib.flow
-
+from validate_email import validate_email
 
 def index(request):
 	return render(request, 'reviews/index.html')
@@ -48,6 +48,48 @@ def update_details(request):
 	else:
 		form = UserProfileForm(instance=profile)
 		return render(request, 'reviews/profile-settings.html', {'profile': profile, 'form': form})
+
+def check_email(request):
+	if request.method == 'GET':
+		# Get the user email
+		email = request.GET['email']
+		# Check if user exists
+		users = User.objects.filter(email='elkanahmalonza@gmail.com')
+		if users < 1:
+			# New User
+			# Check if the email exist
+			email_status = validate_new_email(email)
+			if email_status:
+				# Email Exist
+				pass
+			else:
+				# Email does not exist
+				pass
+
+			return JsonResponse({"success": "New User Sign-up: "+email})
+		else:
+			# User Already Exists
+			pass
+
+	else:
+		return JsonResponse({"success": "GET"})
+
+def validate_new_email(email):
+	is_valid = validate_email(
+		email_address=email,
+		check_format=True,
+		check_blacklist=True,
+		check_dns=True,
+		dns_timeout=10,
+		check_smtp=True,
+		smtp_timeout=10,
+		smtp_helo_host=settings.SMTP_HOST,
+		smtp_from_address=settings.SMTP_ADDRESS,
+		smtp_skip_tls=False,
+		smtp_tls_context=None,
+		smtp_debug=False
+	)
+	return is_valid
 
 
 def category_reviews(request):

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -85,6 +86,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'reviews.wsgi.application'
 
+# Host Emails
+SMTP_HOST = 'imap.gmail.com',
+SMTP_ADDRESS = 'elkanahmalonza@gmail.com',
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
