@@ -37,7 +37,11 @@
 					<div id="name-form" style="display: none;">
 						<div class="d-grid gap-2">
 							<label class="text-start ">Name <span class="text-muted">(publicly visible)</span></label>
-							<input type="text" name="name">
+							<input type="text" name="name" id="id_name_text">
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="id_terms_condition">
+							<label class="form-check-label" for="id_terms_condition">I accept the <a class="text-muted" href="#">Terms & Conditions</a> and <a class="text-muted" href="#"> Privacy Policy</a></label>
 						</div>
 					</div>
 					<div id="email-button" style="display: none;">
@@ -65,27 +69,82 @@
 
 	$("#button-email").click(function(event){
    		event.preventDefault();
-   		var email = $("#email-input_id").val()
-   		//alert(email);
-   		$.ajax({
-   			url: $(this).attr('href'),
-   			type: 'GET',  // http method
-    		data: { 'email': email },
-   			success: function(response){
-   				console.log(response);
-	            if(response['success']) {
-	            	alert(response['success']);
-	            	
-	            }
-	            if(response['error']) {
-	            	alert(response['error']);
-	            	$("#id_error-text").html("Error: "+response['error']+"");
-	            }
-   			},
-	        error: function (request, status, error) {
-	            console.log(request.responseText);
-	        }
-   		});
+
+   		// Check Status
+	   	if($("#name-form").css('display') == 'none') {
+	   		// Add Spinner to Button
+	   		var spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>' +
+	  			'Loading...';
+			$(this).html(spinner);
+			// Disable button
+			$(this).addClass('disabled');
+			//$(this).attr('disabled', true);
+			// Get the Email Address
+			$("#email-input_id").attr("readonly", true)
+	   		var email = $("#email-input_id").val()
+	   		// Send Email Address through AJAX
+	   		$.ajax({
+	   			url: $(this).attr('href'),
+	   			type: 'GET',  // http method
+	    		data: { 'email': email, 'step': 0 },
+	   			success: function(response){
+	   				console.log(response);
+		            if(response['success']) {
+		            	alert(response['success']);
+				   		// Remove Spinner
+				   		$("#button-email").html("Sign-Up");
+				   		// Enable Button
+				   		$("#button-email").removeClass('disabled');
+				   		// Name Input
+				   		$("#name-form").show()
+		            }
+		            if(response['error']) {
+		            	alert(response['error']);
+				   		// Enable Button
+				   		$("#button-email").removeClass("disabled");
+		            	// Remove Spinner
+				   		$("#button-email").html("Continue With Email");
+				   		$("#email-input_id").attr("readonly", false)
+		            	//$("#id_error-text").html("Error: "+response['error']+"");
+		            }
+	   			},
+		        error: function (request, status, error) {
+		            console.log(request.responseText);
+		        }
+	   		});
+	   	} else{
+	   		// Check if terms and Condition Agreed
+	   		if ($("#id_terms_condition").is(':checked')){
+	   			// Get the Email Address
+				var email = $("#email-input_id").val()
+				var name = $("#id_name_text").val()
+				if (name.trim() == ""){
+					alert("Name Field is Empty");
+				} else {
+					$.ajax({
+			   			url: $(this).attr('href'),
+			   			type: 'GET',  // http method
+			    		data: { 'email': email, 'name': name, 'step': 1 },
+			   			success: function(response){
+			   				console.log(response);
+				            if(response['success']) {
+				            	alert(response['success']);
+						   		
+				            }
+				            if(response['error']) {
+				            	alert(response['error']);
+				            }
+			   			},
+				        error: function (request, status, error) {
+				            console.log(request.responseText);
+				        }
+			   		});
+				}
+	   		} else {
+	   			alert("Agree on Term and Conditions.");
+	   		}
+	   		return 0
+	   	} 
    	});
 </script>
 {% endblock %}

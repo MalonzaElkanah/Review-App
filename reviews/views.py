@@ -3,12 +3,13 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 
-from business.models import Category, Business, Review, UserProfile
+from business.models import Category, Business, Review, UserProfile, Confirm_Email
 from business.forms import UserProfileForm
 from . import settings
 
 # Create your views here.
 from validate_email import validate_email
+import random
 
 def index(request):
 	return render(request, 'reviews/index.html')
@@ -51,44 +52,83 @@ def update_details(request):
 
 def check_email(request):
 	if request.method == 'GET':
-		# Get the user email
-		email = request.GET['email']
-		# Check if user exists
-		users = User.objects.filter(email='elkanahmalonza@gmail.com')
-		if users < 1:
-			# New User
-			# Check if the email exist
-			email_status = validate_new_email(email)
-			if email_status:
-				# Email Exist
-				pass
+		if int(request.GET['step']) == 0:
+			# Get the user email
+			email = request.GET['email']
+			# Check if user exists
+			users = User.objects.filter(email=email)
+			if users.count() < 1:
+				# New User
+				# Check if the email exist
+				is_valid = validate_email(email_address=email,
+				    check_format=True,
+				    check_blacklist=True,
+				    check_dns=True,
+				    dns_timeout=10,
+				    check_smtp=True,
+				    smtp_timeout=10,
+				    smtp_helo_host=None,
+				    smtp_from_address=None,
+				    smtp_skip_tls=False,
+				    smtp_tls_context=None,
+				    smtp_debug=False
+				)
+				if is_valid:
+					# Email Exist
+					return JsonResponse({"success": "New User, Email Passed validation test:"+email})
+				else:
+					# Email does not exist
+					return JsonResponse({"error": "Their is issue with your email: "+email})
 			else:
-				# Email does not exist
-				pass
+				# User Already Exists
+				return JsonResponse({"success": "Email Aready Exists "+email})
+		elif int(request.GET['step']) == 1:
+			# Get the user email and name
+			email = request.GET['email']
+			name = request.GET['name']
+			# Generate random Number between 0000 to 9999
+			confirmation_code = format(random.randint(0000,9999), '04d')
+			# Save random number for later varification
+			data = Confirm_Email(email=email, code=confirmation_code, name=name)
+			data.save()
+			# Send the Code to User Email
+			
+			# Return Success
+			return JsonResponse({"success": "Wait for Confirm Code in Your Email."})
+		elif int(request.GET['step'] == 2):
+			# Get User Data
+			email = request.GET['email']
+			name = request.GET['name']
+			code = request.GET['code']
+			data = Confirm_Email.objects.filter(email=email, name=name, code=code)
+			if data > 0:
+				# Create user by adding username(email), email and password Parameters
+				user = User.objects.create_user(email, email, code)
+				# Check if user has been created
+				if user.is_active:
+					# Add first name and last name to User object.  
+					user.first_name = name
+					user.save()
+					# Login User
+					user = authenticate(username=email, password=code)
+					# Login the user if username and password is correct.
+					if user is not None:
+						login(request, user)
+						# Delete Data from Confirm Email
+						data.delete()
+						# Redirect the user to the link require login
+						return JsonResponse({"success": "Sign Up Succeful."})
+			else:
+				# Error
+				return JsonResponse({"error": "Wrong Error Code"})
 
-			return JsonResponse({"success": "New User Sign-up: "+email})
 		else:
-			# User Already Exists
-			pass
-
+			return JsonResponse({"error": "Application error: "})
 	else:
 		return JsonResponse({"success": "GET"})
 
 def validate_new_email(email):
-	is_valid = validate_email(
-		email_address=email,
-		check_format=True,
-		check_blacklist=True,
-		check_dns=True,
-		dns_timeout=10,
-		check_smtp=True,
-		smtp_timeout=10,
-		smtp_helo_host=settings.SMTP_HOST,
-		smtp_from_address=settings.SMTP_ADDRESS,
-		smtp_skip_tls=False,
-		smtp_tls_context=None,
-		smtp_debug=False
-	)
+	is_valid = validate_email(email, verify=True)
 	return is_valid
 
 
