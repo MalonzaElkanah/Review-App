@@ -44,6 +44,16 @@
 							<label class="form-check-label" for="id_terms_condition">I accept the <a class="text-muted" href="#">Terms & Conditions</a> and <a class="text-muted" href="#"> Privacy Policy</a></label>
 						</div>
 					</div>
+					<div id="code-form" style="display: none;">
+						<div class="form-check">
+							<label class="form-check-label" >Confirmation code has been sent to your Email. Enter the code below to login.</label>
+						</div>
+						<div class="d-grid gap-2">
+							<label class="text-start ">Code</label>
+							<input type="number" name="code" id="id_code_text" min="4" max="4">
+						</div>
+						
+					</div>
 					<div id="email-button" style="display: none;">
 						<div class="d-grid gap-2">
 							<a href="{% url 'check-email' %}" id="button-email" class="btn btn-primary">Continue with Email</a>
@@ -69,50 +79,100 @@
 
 	$("#button-email").click(function(event){
    		event.preventDefault();
+   		// Add Spinner to Button
+   		var spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>' +
+  			'Loading...';
+		$(this).html(spinner);
+		// Disable button
+		$(this).addClass('disabled');
 
    		// Check Status
 	   	if($("#name-form").css('display') == 'none') {
-	   		// Add Spinner to Button
-	   		var spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>' +
-	  			'Loading...';
-			$(this).html(spinner);
-			// Disable button
-			$(this).addClass('disabled');
-			//$(this).attr('disabled', true);
-			// Get the Email Address
-			$("#email-input_id").attr("readonly", true)
-	   		var email = $("#email-input_id").val()
-	   		// Send Email Address through AJAX
-	   		$.ajax({
-	   			url: $(this).attr('href'),
-	   			type: 'GET',  // http method
-	    		data: { 'email': email, 'step': 0 },
-	   			success: function(response){
-	   				console.log(response);
-		            if(response['success']) {
-		            	alert(response['success']);
-				   		// Remove Spinner
-				   		$("#button-email").html("Sign-Up");
-				   		// Enable Button
-				   		$("#button-email").removeClass('disabled');
-				   		// Name Input
-				   		$("#name-form").show()
-		            }
-		            if(response['error']) {
-		            	alert(response['error']);
-				   		// Enable Button
-				   		$("#button-email").removeClass("disabled");
-		            	// Remove Spinner
-				   		$("#button-email").html("Continue With Email");
-				   		$("#email-input_id").attr("readonly", false)
-		            	//$("#id_error-text").html("Error: "+response['error']+"");
-		            }
-	   			},
-		        error: function (request, status, error) {
-		            console.log(request.responseText);
-		        }
-	   		});
-	   	} else{
+	   		if($("#code-form").css('display') != 'none') {
+	   			var email = $("#email-input_id").val()
+				var name = $("#id_name_text").val()
+				var code = $("#id_code_text").val()
+				if (code.trim() == ""){
+					alert("Code Field is Empty");
+					// Remove Spinner
+					$("#button-email").html("Sign-Up");
+				} else {
+					$.ajax({
+			   			url: $(this).attr('href'),
+			   			type: 'GET',  // http method
+			    		data: { 'email': email, 'name': name, 'code': code, 'step': 2 },
+			   			success: function(response){
+			   				console.log(response);
+				            if(response['success']) {
+				            	alert(response['success']);
+				            	// Remove Spinner
+					   			$("#button-email").html("Login");
+						   		if(response['redirect']){
+				            		window.location.href = response['redirect'];
+				            	}else{
+					            	window.location.href = "../";
+				            	}
+				            }
+				            if(response['error']) {
+				            	alert(response['error']);
+				            	// Remove Spinner
+					   			$("#button-email").html("Sign-Up");
+				            }
+			   			},
+				        error: function (request, status, error) {
+				            console.log(request.responseText);
+				        }
+			   		});
+				}
+	   		} else {
+
+				// Get the Email Address
+				$("#email-input_id").attr("readonly", true)
+		   		var email = $("#email-input_id").val()
+		   		// Send Email Address through AJAX
+		   		$.ajax({
+		   			url: $(this).attr('href'),
+		   			type: 'GET',  // http method
+		    		data: { 'email': email, 'step': 0 },
+		   			success: function(response){
+		   				console.log(response);
+			            if(response['success']) {
+			            	alert(response['success']);
+
+			            	if(response['user_name']){
+			            		// Remove Spinner
+						   		$("#button-email").html("Login");
+			            		// Fill Name Field
+			            		$("#id_name_text").val(response['user_name']);
+			            		// Display Code Form
+			            		$("#email-form").hide();
+								$("#name-form").hide();
+								$("#code-form").show();
+			            		
+			            	} else{
+						   		// Remove Spinner
+						   		$("#button-email").html("Sign-Up");
+						   		// Name Input
+						   		$("#name-form").show()
+						   		$("#email-link").hide()
+			            	}
+			            }
+			            if(response['error']) {
+			            	alert(response['error']);
+					   		// Enable Button
+					   		$("#button-email").removeClass("disabled");
+			            	// Remove Spinner
+					   		$("#button-email").html("Continue With Email");
+					   		$("#email-input_id").attr("readonly", false)
+			            	//$("#id_error-text").html("Error: "+response['error']+"");
+			            }
+		   			},
+			        error: function (request, status, error) {
+			            console.log(request.responseText);
+			        }
+		   		});
+		   	}
+	   	} else if($("#code-form").css('display') == 'none') {
 	   		// Check if terms and Condition Agreed
 	   		if ($("#id_terms_condition").is(':checked')){
 	   			// Get the Email Address
@@ -120,6 +180,8 @@
 				var name = $("#id_name_text").val()
 				if (name.trim() == ""){
 					alert("Name Field is Empty");
+					// Remove Spinner
+					$("#button-email").html("Sign-Up");
 				} else {
 					$.ajax({
 			   			url: $(this).attr('href'),
@@ -128,11 +190,18 @@
 			   			success: function(response){
 			   				console.log(response);
 				            if(response['success']) {
+								$("#email-form").hide();
+								$("#name-form").hide();
+								$("#code-form").show();
 				            	alert(response['success']);
+				            	// Remove Spinner
+					   			$("#button-email").html("Sign-Up");
 						   		
 				            }
 				            if(response['error']) {
 				            	alert(response['error']);
+				            	// Remove Spinner
+					   			$("#button-email").html("Sign-Up");
 				            }
 			   			},
 				        error: function (request, status, error) {
@@ -142,9 +211,18 @@
 				}
 	   		} else {
 	   			alert("Agree on Term and Conditions.");
+	   			// Remove Spinner
+				$("#button-email").html("Sign-Up");
 	   		}
-	   		return 0
-	   	} 
+	   	} else {
+	   		alert(" An Error Ocurred");
+	   		// Remove Spinner
+			$("#button-email").html("Sign-Up");
+	   		location.reload();
+	   	}
+
+   		// Enable Button
+   		$("#button-email").removeClass('disabled');
    	});
 </script>
 {% endblock %}

@@ -1,0 +1,12 @@
+{% autoescape off %}
+
+Hi {{name}},
+
+Thanks for signing up with BizReviews!
+
+Here’s the confirmation code you need to finish setting up your account: {{code}}
+
+Thanks again,
+BizReviews
+
+{% endautoescape %}

@@ -13,13 +13,13 @@
 			<div class="container">
 				<nav aria-label="breadcrumb">
 				  	<ol class="breadcrumb">
-				    	<li class="breadcrumb-item"><a href="#">Home</a></li>
+				    	<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
 				    	<li class="breadcrumb-item active" aria-current="page">Categories</li>
 				  	</ol>
 				</nav>
 				<div class="row">
-					<h1>Best in Banks</h1>
-					<p class="text-muted">Top-rated businesses in Bank Category <i class="fas fa-info-circle"></i></p>
+					<h1>Best in {{category.name}}</h1>
+					<p class="text-muted">Top-rated businesses in {{category.name}} Category <i class="fas fa-info-circle"></i></p>
 				</div>
 			</div>
 		</div>
@@ -41,8 +41,11 @@
 							</div>
 							<div class="col-12">
 								<ul class="list-group">
-									<li class="list-group-item">Banks</li>
-									<li class="list-group-item">Hospitals</li>
+								{% for cat in categories %}
+									<li class="list-group-item">
+										<a href="{% url 'category-reviews' category.name|slugify category.id %}">{{cat.name}}</a>
+									</li>
+								{% endfor %}
 								</ul>
 							</div>
 						</div>
@@ -146,18 +149,19 @@
 			<div class="col-8">
 				<div class="row">
 					<h5>Top-rated companies</h5>
-					<p class="text-muted">Showing 1-20 of 58 results based on current filters. Ordered by Biz</p>						
+					<p class="text-muted">Showing 1-{{category.my_businesses.count}} of {{category.my_businesses.count}} results based on current filters. Ordered by Biz</p>						
 				</div>
-				<div class="row card">
+				{% for business in category.my_businesses %}
+				<div class="row mb-3 card">
 					<div class="card-body">
 						
 						<div class="row">
 							<div class="col-3">
-								<img src="{% static 'main/images/pr1.jpg' %}" class="img-thumbnail" alt="...">
+								<img src="{{business.image.url}}" class="img-thumbnail" alt="business image">
 							</div>
 							<div class="col-9">
 								<div class="row">
-									<h5>Diamond Trust Bank </h5>
+									<h5>{{business.name}}</h5>
 								</div>
 								<div class="row d-flex">
 									<div class="d-flex">
@@ -171,47 +175,17 @@
                                     </div>
 								</div>
 								<div class="row">
-									<p>Bank</p>
+									<p>{{category.name}}</p>
 								</div>
 								<div class="row">
-									<p class="text-muted"><i class="fas fa-map-marker-alt"></i> CBD Nairobi, Kenya</p>
+									<p class="text-muted"><i class="fas fa-map-marker-alt"></i> {{business.town}} {{business.county}}, {{business.country}}</p>
 								</div>
 							</div>
 						</div>
-						<a class="stretched-link" href="{% url 'business-reviews' %}"></a>
+						<a class="stretched-link" href="{% url 'business-reviews' business.name|slugify business.id %}"></a>
 					</div>
 				</div>
-				<div class="row mt-3 card">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-3">
-								<img src="{% static 'main/images/pr1.jpg' %}" class="img-thumbnail" alt="...">
-							</div>
-							<div class="col-9">
-								<div class="row">
-									<h5>Diamond Trust Bank </h5>
-								</div>
-								<div class="row d-flex">
-									<div class="d-flex">
-                                        <i class="fas fa-star fa-lg text-success"></i>
-                                        <i class="fas fa-star fa-lg text-success"></i>
-                                        <i class="fas fa-star fa-lg text-success"></i>
-                                        <i class="fas fa-star fa-lg text-success"></i>
-                                        <i class="fas fa-star fa-lg text-success"></i>
-                                        <p class="ms-2"> 2345 reviews . Average Rate 4.5</p>
-                                    </div>
-								</div>
-								<div class="row">
-									<p>Bank</p>
-								</div>
-								<div class="row">
-									<p class="text-muted"><i class="fas fa-map-marker-alt"></i> CBD Nairobi, Kenya</p>
-								</div>
-							</div>
-						</div>
-						<a class="stretched-link" href="{% url 'business-reviews' %}"></a>
-					</div>
-				</div>
+				{% endfor %}
 
 			</div>
 			<!-- Reviews Section Start -->

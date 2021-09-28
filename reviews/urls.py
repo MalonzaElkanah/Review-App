@@ -16,11 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
+from django.conf.urls.static import static
+
 
 from . import views
 from . import settings
 
 urlpatterns = [
+    path('', views.index, name='index'),
+    path('categories/<slug:slug>/<int:category_id>/', views.category_reviews, name='category-reviews'),
+    path('business/<slug:slug>/<int:business_id>/', views.business_reviews, name='business-reviews'),
+
     path('admin/', admin.site.urls, name='administrator'),
     path('', include('social_django.urls', namespace='social')),
     #path('', views_main.index, name='index'),
@@ -28,8 +34,7 @@ urlpatterns = [
     path('manage/', views.manage, name='manage'),
     path('update/user-details/', views.update_details, name='update-user'),
     path('check-email/', views.check_email, name='check-email'),
-    path('', views.index, name='index'),
-    path('login/', views.login, name='login'),
-    path('categories/bank/', views.category_reviews, name='category-reviews'),
-    path('categories/bank/xyz/', views.business_reviews, name='business-reviews'),
-]
+    
+    path('login/', views.auth_login, name='login'),
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
