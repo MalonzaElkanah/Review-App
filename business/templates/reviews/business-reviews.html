@@ -3,6 +3,9 @@
 {% load static %}
 
 {% block title %} Business Reviews {% endblock %}
+{% block css %}
+	<link href="{% static 'main/css/page/business-reviews.css' %}" rel="stylesheet">
+{% endblock %}
         
 {% block content %}
 <main class="main-index">
@@ -14,19 +17,18 @@
 				<nav aria-label="breadcrumb">
 				  	<ol class="breadcrumb">
 				    	<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
-				    	<li class="breadcrumb-item"><a href="#">Categories</a></li>
-				    	<li class="breadcrumb-item"><a href="#">Banks</a></li>
-				    	<li class="breadcrumb-item active" aria-current="page">Diamond Trust Bank</li>
+				    	<li class="breadcrumb-item"><a href="{% url 'category-reviews' business.category.name|slugify business.category.id %}">{{business.category.name}}</a></li>
+				    	<li class="breadcrumb-item active" aria-current="page">{{business.name}}</li>
 				  	</ol>
 				</nav>
 				<div class="row">
 					<div class="col-8">
 						<div class="row">
 							<div class="col-3">
-								<img src="{% static 'main/images/pr1.jpg' %}" class="img-thumbnail" alt="...">
+								<img src="{{business.image.url}}" class="img-thumbnail" alt="{{business.name}} Business Image">
 							</div>
 							<div class="col-8">
-								<h1>Diamond Trust Banks</h1>
+								<h1>{{business.name}}</h1>
 								<p class="text-muted">Reviews 456 | <span>Excellent</span></p>
 								
 								<div class="d-flex">
@@ -44,8 +46,8 @@
 						<ul class="list-group">
 							<li class="list-group-item d-flex justify-content-between">
 							    <div class="ms-2 me-auto">
-							      <div class="fw-bold">dtbank.com <i class="fas fa-globe text-muted"></i></div>
-							      vist this website
+							      <div class="fw-bold">{{business.website_name}}<i class="fas fa-globe text-muted"></i></div>
+							      <a href="{{business.website}}" target="_blank" rel="noopener noreferrer"> vist this website</a>
 							    </div>
 							</li>
 						</ul>
@@ -71,11 +73,11 @@
 							<a href="#" class="ms-3">Write a review</a>
 						</div>
 						<div class="d-flex">
-	                        <i class="far fa-star fa-3x text-muted"></i>
-	                        <i class="far fa-star fa-3x text-muted"></i>
-	                        <i class="far fa-star fa-3x text-muted"></i>
-	                        <i class="far fa-star fa-3x text-muted"></i>
-	                        <i class="far fa-star fa-3x text-muted"></i>
+	                        <i id="rate-star_1" class="far fa-star fa-3x text-muted rate-star"></i>
+	                        <i id="rate-star_2" class="far fa-star fa-3x text-muted rate-star"></i>
+	                        <i id="rate-star_3" class="far fa-star fa-3x text-muted rate-star"></i>
+	                        <i id="rate-star_4" class="far fa-star fa-3x text-muted rate-star"></i>
+	                        <i id="rate-star_5" class="far fa-star fa-3x text-muted rate-star"></i>
 	                    </div>
 						
 					</div>
@@ -228,7 +230,7 @@
 							</div>
 							
 						</div>
-						<a class="stretched-link" href="{% url 'business-reviews' %}"></a>
+						<a class="stretched-link" href="#"></a>
 					</div>
 				</div>
 
@@ -287,7 +289,7 @@
 							</div>
 							
 						</div>
-						<a class="stretched-link" href="{% url 'business-reviews' %}"></a>
+						<a class="stretched-link" href="#"></a>
 					</div>
 				</div>
 
@@ -346,7 +348,7 @@
 							</div>
 							
 						</div>
-						<a class="stretched-link" href="{% url 'business-reviews' %}"></a>
+						<a class="stretched-link" href="#"></a>
 					</div>
 				</div>
 
@@ -362,7 +364,7 @@
 					<div class="card-body">
 						<div class="row pt-2">
 							<div class="col-12">
-								<h5>All About DT Bank</h5>
+								<h5>All About {{business.name}}</h5>
 							</div>
 							<div class="col-12 text-muted pt-0">
 								<small class="pt-0">
@@ -370,7 +372,7 @@
 								</small>
 							</div>
 							<div class="col-12 pt-2">
-								<p>We offer unique hemp infused pet products for dogs an cats: pet hemp oils, hemp infused calming treats, hemp infused natural shampoos for dogs, pet snacks, dog and cat natural snacks, and more!</p>
+								<p>{{business.description}}</p>
 							</div>
 						</div>
 						<hr>
@@ -381,15 +383,15 @@
 							<div class="col-12 text-muted">
 								<p>
 									<i class="fas fa-at"></i> 
-									<a href="#" class="ms-3">businessfulani@gmail.com</a>
+									<a href="mailto:{{business.email}}" class="ms-3" target="_blank" rel="noopener noreferrer">{{business.email}}</a>
 								</p>
 								<p>
 									<i class="fas fa-phone-alt"></i> 
-									<a href="#" class="ms-3">0715323544</a>
+									<a href="tel:{{business.phone_number}}" class="ms-3">{{business.phone_number}}</a>
 								</p>
 								<p>
 									<i class="fas fa-map-marker-alt"></i> 
-									<a href="#" class="ms-3">Nairobi, Kenya</a>
+									<a href="#" class="ms-3">{{business.county}}, {{business.country}}</a>
 								</p>
 							</div>
 						</div>
@@ -401,9 +403,9 @@
 							</div>
 							<div class="col-12">
 								<p>
-									<strong>Petals and Tails</strong> is 
+									<strong>{{business.name}}</strong> is 
 									<strong>2 out of 60 ranked</strong> companies in the 
-									<a href="#">category Bank</a> on Trustpilot
+									<a href="#">category {{business.category.name}}</a> on Bizview
 								</p>
 							</div>
 						</div>
@@ -419,3 +421,99 @@
 
 </main>
 {% endblock %}
+
+{% block javascript %}
+	<script type="text/javascript">
+		//Hover rate-star_1
+		$("#rate-star_1").hover(function(){
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+			$("#rate-star_1").addClass("fas fa-star fa-3x text-danger");	
+			$("#rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");  	
+		}, function(){
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();	
+		  	$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");
+		});
+		// Click rate-star_1
+		$("#rate-star_1").click(function(event){
+			event.preventDefault();
+			$(this).off('mouseenter mouseleave');
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+			$("#rate-star_1").addClass("fas fa-star fa-3x text-danger");
+			$("#rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");	
+		});
+
+		// Hover rate-star_2
+		$("#rate-star_2").hover(function(){
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+			$("#rate-star_1, #rate-star_2").addClass("fas fa-star fa-3x text-danger text-opacity-75");
+			$("#rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");	  	
+		}, function(){
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+		  	$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");
+		});
+		// Click rate-star_2
+		$("#rate-star_2").click(function(event){
+			event.preventDefault();
+			$(this).off('mouseenter mouseleave');
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+			$("#rate-star_1, #rate-star_2").addClass("fas fa-star fa-3x text-danger text-opacity-75");
+			$("#rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");	
+		});
+
+		// Hover rate-star_3
+		$("#rate-star_3").hover(function(){
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+			$("#rate-star_1, #rate-star_2, #rate-star_3").addClass("fas fa-star fa-3x text-success text-opacity-50");	
+			$("#rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");  	
+		}, function(){
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+		  	$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");
+		});
+		// Click rate-star_3
+		$("#rate-star_3").click(function(event){
+			event.preventDefault();
+			$(this).off('mouseenter mouseleave');
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+			$("#rate-star_1, #rate-star_2, #rate-star_3").addClass("fas fa-star fa-3x text-success text-opacity-50");	
+			$("#rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star"); 	
+		});
+
+		// Hover rate-star_4
+		$("#rate-star_4").hover(function(){
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4").addClass("fas fa-star fa-3x text-success text-opacity-75");	
+			$("#rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");  	
+		}, function(){
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+		  	$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");
+		});
+		// Click rate-star_4
+		$("#rate-star_4").click(function(event){
+			event.preventDefault();
+			$(this).off('mouseenter mouseleave');
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4").addClass("fas fa-star fa-3x text-success text-opacity-75");	
+			$("#rate-star_5").addClass("far fa-star fa-3x text-muted rate-star"); 
+		});
+
+		// Hover rate-star_5
+		$("#rate-star_5").hover(function(){
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("fas fa-star fa-3x text-success");  	
+		}, function(){
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass("fas fa-star fa-3x text-success");
+		  	$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");
+		});
+		// Click rate-star_5
+		$("#rate-star_5").click(function(event){
+			event.preventDefault();
+			$(this).off('mouseenter mouseleave');
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
+			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("fas fa-star fa-3x text-success");
+		});
+
+		//fas fa-star fa-3x text-success
+		
+	</script>
+{% endblock %}
+

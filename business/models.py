@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from urllib.parse import urlparse
 
 
 class UserProfile(models.Model):
@@ -38,6 +39,12 @@ class Business(models.Model):
 
 	def __str__(self):
 		return self.name
+
+	def website_name(self):
+		website = self.website
+		domain = urlparse(website).netloc
+		return domain
+
 
 
 class Review(models.Model):
