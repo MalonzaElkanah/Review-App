@@ -29,15 +29,46 @@
 							</div>
 							<div class="col-8">
 								<h1>{{business.name}}</h1>
-								<p class="text-muted">Reviews 456 | <span>Excellent</span></p>
-								
+								<p class="text-muted">Reviews {{business.reviews_count}} | <span>{{business.rating_remarks}}</span></p>
 								<div class="d-flex">
-		                            <i class="fas fa-star fa-3x text-success"></i>
-		                            <i class="fas fa-star fa-3x text-success"></i>
-		                            <i class="fas fa-star fa-3x text-success"></i>
-		                            <i class="fas fa-star fa-3x text-success"></i>
-		                            <i class="fas fa-star fa-3x text-success"></i>
-		                            <p class="ms-2 text-muted"> 4.5</p>
+								{% if business.rating > 4.5 %}
+                                        <i class="fas fa-star fa-3x text-success"></i>
+			                            <i class="fas fa-star fa-3x text-success"></i>
+			                            <i class="fas fa-star fa-3x text-success"></i>
+			                            <i class="fas fa-star fa-3x text-success"></i>
+			                            <i class="fas fa-star fa-3x text-success"></i>
+                                    {% elif business.rating > 3.5 %}
+                                    	<i class="fas fa-star fa-3x text-success text-opacity-75"></i>
+                                        <i class="fas fa-star fa-3x text-success text-opacity-75"></i>
+                                        <i class="fas fa-star fa-3x text-success text-opacity-75"></i>
+                                        <i class="fas fa-star fa-3x text-success text-opacity-75"></i>
+                                        <i class="far fa-star fa-3x text-muted"></i>
+                                    {% elif business.rating > 2.5 %}
+                                    	<i class="fas fa-star fa-3x text-success text-opacity-75"></i>
+                                        <i class="fas fa-star fa-3x text-success text-opacity-75"></i>
+                                        <i class="fas fa-star fa-3x text-success text-opacity-75"></i>
+                                        <i class="far fa-star fa-3x text-muted"></i>
+                                        <i class="far fa-star fa-3x text-muted"></i>
+                                    {% elif business.rating > 1.5 %}
+                                    	<i class="fas fa-star fa-3x text-danger text-opacity-75"></i>
+                                        <i class="fas fa-star fa-3x text-danger text-opacity-75"></i>
+                                        <i class="far fa-star fa-3x text-muted"></i>
+                                        <i class="far fa-star fa-3x text-muted"></i>
+                                        <i class="far fa-star fa-3x text-muted"></i>
+                                    {% elif business.rating > 0.0 %}
+                                    	<i class="fas fa-star fa-3x text-danger"></i>
+                                        <i class="far fa-star fa-3x text-muted"></i>
+                                        <i class="far fa-star fa-3x text-muted"></i>
+                                        <i class="far fa-star fa-3x text-muted"></i>
+                                        <i class="far fa-star fa-3x text-muted"></i>
+                                    {% else %}
+                                    	<i class="fas fa-star fa-3x text-success"></i>
+			                            <i class="fas fa-star fa-3x text-success"></i>
+			                            <i class="fas fa-star fa-3x text-success"></i>
+			                            <i class="fas fa-star fa-3x text-success"></i>
+			                            <i class="fas fa-star fa-3x text-success"></i>
+                                    {% endif %}
+		                            <p class="ms-2 text-muted"> {{business.rating}}</p>
 		                        </div>
 							</div>
 						</div>
@@ -47,7 +78,7 @@
 							<li class="list-group-item d-flex justify-content-between">
 							    <div class="ms-2 me-auto">
 							      <div class="fw-bold">{{business.website_name}}<i class="fas fa-globe text-muted"></i></div>
-							      <a href="{{business.website}}" target="_blank" rel="noopener noreferrer"> vist this website</a>
+							      <a class="text-decoration-none" href="{{business.website}}" target="_blank" rel="noopener noreferrer"> vist this website</a>
 							    </div>
 							</li>
 						</ul>
@@ -70,7 +101,7 @@
 						<div class="d-flex align-items-center">
 
 							<i class="fas fa-user-circle fa-3x text-muted"></i>
-							<a href="#" class="ms-3">Write a review</a>
+							<a href="{% url 'review-business' business.name|slugify business.id %}" class="ms-3">Write a review</a>
 						</div>
 						<div class="d-flex">
 	                        <i id="rate-star_1" class="far fa-star fa-3x text-muted rate-star"></i>
@@ -87,7 +118,7 @@
 					<div class="card-body">
 
 						<div class="row d-flex justify-content-between">
-							<h5 class="col ms-2">Reviews <span class="text-muted">456</span></h5>
+							<h5 class="col ms-2">Reviews <span class="text-muted">{{business.reviews_count}}</span></h5>
 							<div class="col d-flex align-items-center">
 								<label>Filter by: </label>
 								<a href="#" class="btn btn-outline-dark ms-2">Rating <i class="fas fa-plus-circle"></i></a>
@@ -102,9 +133,9 @@
 								  	<label class="form-check-label" for="inlineCheckbox1">Excellent</label>
 								</div>
 								<div class="progress col-8" style="height: 10px;">
-								  <div class="progress-bar" role="progressbar" style="width: 94%;" aria-valuenow="94" aria-valuemin="0" aria-valuemax="100"></div>
+								  <div class="progress-bar" role="progressbar" style="width: {{business.excellent_percentage}}%;" aria-valuenow="{{business.excellent_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
-								<div class="col-1">94%</div>
+								<div class="col-1">{{business.excellent_percentage}}%</div>
 							</div>
 							<div class="row align-items-center pt-2">
 								<div class="form-check col-2">
@@ -112,10 +143,10 @@
 								  	<label class="form-check-label" for="inlineCheckbox2">Great</label>
 								</div>
 								<div class="progress col-8" style="height: 10px;">
-									<div class="progress-bar" role="progressbar" style="width: 6%;" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100"></div>
+									<div class="progress-bar" role="progressbar" style="width: {{business.great_percentage}}%;" aria-valuenow="{{business.great_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 								<div class="col-1">
-									6%
+									{{business.great_percentage}}%
 								</div>
 							</div>
 							<div class="row align-items-center pt-2">
@@ -124,10 +155,10 @@
 								  	<label class="form-check-label" for="inlineCheckbox3"> Average</label>
 								</div>
 								<div class="progress col-8" style="height: 10px;">
-									<div class="progress-bar" role="progressbar" style="width: 1%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+									<div class="progress-bar" role="progressbar" style="width: {{business.average_percentage}}%;" aria-valuenow="{{business.average_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 								<div class="col-1">
-									<1%
+									{{business.average_percentage}}%
 								</div>
 							</div>
 							<div class="row align-items-center pt-2">
@@ -136,10 +167,10 @@
 								  	<label class="form-check-label" for="inlineCheckbox4"> Poor</label>
 								</div>
 								<div class="progress col-8" style="height: 10px;">
-									<div class="progress-bar" role="progressbar" style="width: 1%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+									<div class="progress-bar" role="progressbar" style="width: {{business.poor_percentage}}%;" aria-valuenow="{{business.poor_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 								<div class="col-1">
-									<1%
+									{{business.poor_percentage}}%
 								</div>
 							</div>
 							<div class="row align-items-center pt-2">
@@ -149,10 +180,10 @@
 								  	<label class="form-check-label" for="inlineCheckbox4"> Bad</label>
 								</div>
 								<div class="progress col-8" style="height: 10px;">
-									<div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+									<div class="progress-bar" role="progressbar" style="width: {{business.bad_percentage}}%;" aria-valuenow="{{business.bad_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 								<div class="col-1">
-									0%
+									{{business.bad_percentage}}%
 								</div>
 							</div>
 						</div>
@@ -175,18 +206,18 @@
 
 					</div>
 				</div>
-
+				{% for review in business.my_reviews %}
 				<div class="row mt-3 card">
 					<div class="card-body p-4">
 						<div class="row">
 							<div class="d-flex">
-                                <img src="{% static 'main/images/profiles/avatar-8.jpg' %}" class="rounded-circle float-start" width="50px" height="50px" alt="e">
+                                <img src="{{review.user_profile.image.url}}" class="rounded-circle float-start" width="50px" height="50px" alt="e">
                                 <div class="px-3">
-                                	<div>John Terry</div>
+                                	<div>{{review.user.first_name}}</div>
                                 	<div class="d-flex">
                                 		<small>
                                 			<i class="fas fa-pen"></i> 
-                                			<span class="text-muted">2 reviews </span>
+                                			<span class="text-muted">{{review.user_reviews_count}} reviews </span>
                                 			<i class="fas fa-map-marker-alt ps-2"></i> 
                                 			<span class="text-muted"> Nairobi, Ke</span>
                                 		</small>
@@ -199,6 +230,7 @@
 						</div>
 						<div class="row">
 							<div class="row justify-content-between">
+							{% if review.rating == 5 %}
 								<div class="col d-flex">
                                     <i class="fas fa-star fa-lg text-success"></i>
                                     <i class="fas fa-star fa-lg text-success"></i>
@@ -206,12 +238,53 @@
                                     <i class="fas fa-star fa-lg text-success"></i>
                                     <i class="fas fa-star fa-lg text-success"></i>
                                 </div>
-                                <div class="col text-end text-muted">2 Hours Ago</div>
+                            {% elif review.rating == 4 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% elif review.rating == 3 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% elif review.rating == 2 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% elif review.rating == 1 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-danger"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% else %}
+                            	<div class="col d-flex">
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% endif %}
+                                <div class="col text-end text-muted">{{review.date_created|timesince}} Ago</div>
 							</div>
 						</div>
 						<div class="row pt-2">
-							<h5 class="card-title">Card title</h5>
-							<p class="card-text">Great products, My dog never liked supplements and medicines, but now gladly takes them. The delivery and packaging is also satisfactory. Would surely recommend. </p>
+							<h5 class="card-title">{{review.title}}</h5>
+							<p class="card-text">{{review.review}}</p>
 						</div>
 						<div class="row pt-2 mx-1">
 							<hr>
@@ -233,128 +306,8 @@
 						<a class="stretched-link" href="#"></a>
 					</div>
 				</div>
-
-
-				<div class="row mt-3 card">
-					<div class="card-body p-4">
-						<div class="row">
-							<div class="d-flex">
-                                <img src="{% static 'main/images/profiles/avatar-8.jpg' %}" class="rounded-circle float-start" width="50px" height="50px" alt="e">
-                                <div class="px-3">
-                                	<div>John Terry</div>
-                                	<div class="d-flex">
-                                		<small>
-                                			<i class="fas fa-pen"></i> 
-                                			<span class="text-muted">2 reviews </span>
-                                			<i class="fas fa-map-marker-alt ps-2"></i> 
-                                			<span class="text-muted"> Nairobi, Ke</span>
-                                		</small>
-                                	</div>
-                                </div>
-                            </div>
-						</div>
-						<div class="row pt-2 mx-1">
-							<hr>
-						</div>
-						<div class="row">
-							<div class="row justify-content-between">
-								<div class="col d-flex">
-                                    <i class="fas fa-star fa-lg text-success"></i>
-                                    <i class="fas fa-star fa-lg text-success"></i>
-                                    <i class="fas fa-star fa-lg text-success"></i>
-                                    <i class="fas fa-star fa-lg text-success"></i>
-                                    <i class="fas fa-star fa-lg text-success"></i>
-                                </div>
-                                <div class="col text-end text-muted">2 Hours Ago</div>
-							</div>
-						</div>
-						<div class="row pt-2">
-							<h5 class="card-title">Card title</h5>
-							<p class="card-text">Great products, My dog never liked supplements and medicines, but now gladly takes them. The delivery and packaging is also satisfactory. Would surely recommend. </p>
-						</div>
-						<div class="row pt-2 mx-1">
-							<hr>
-						</div>
-						<div class="row justify-content-between text-muted pt-0">
-							<div class="col">
-								<small>
-									<i class="far fa-thumbs-up"></i> Helpful
-									<i class="fas fa-share-alt ms-2"></i> Share
-								</small>
-							</div>
-							<div class="col text-end">
-								<small>
-									<i class="far fa-flag"></i> Report
-								</small>
-							</div>
-							
-						</div>
-						<a class="stretched-link" href="#"></a>
-					</div>
-				</div>
-
-
-				<div class="row mt-3 card">
-					<div class="card-body p-4">
-						<div class="row">
-							<div class="d-flex">
-                                <img src="{% static 'main/images/profiles/avatar-8.jpg' %}" class="rounded-circle float-start" width="50px" height="50px" alt="e">
-                                <div class="px-3">
-                                	<div>John Terry</div>
-                                	<div class="d-flex">
-                                		<small>
-                                			<i class="fas fa-pen"></i> 
-                                			<span class="text-muted">2 reviews </span>
-                                			<i class="fas fa-map-marker-alt ps-2"></i> 
-                                			<span class="text-muted"> Nairobi, Ke</span>
-                                		</small>
-                                	</div>
-                                </div>
-                            </div>
-						</div>
-						<div class="row pt-2 mx-1">
-							<hr>
-						</div>
-						<div class="row">
-							<div class="row justify-content-between">
-								<div class="col d-flex">
-                                    <i class="fas fa-star fa-lg text-success"></i>
-                                    <i class="fas fa-star fa-lg text-success"></i>
-                                    <i class="fas fa-star fa-lg text-success"></i>
-                                    <i class="fas fa-star fa-lg text-success"></i>
-                                    <i class="fas fa-star fa-lg text-success"></i>
-                                </div>
-                                <div class="col text-end text-muted">2 Hours Ago</div>
-							</div>
-						</div>
-						<div class="row pt-2">
-							<h5 class="card-title">Card title</h5>
-							<p class="card-text">Great products, My dog never liked supplements and medicines, but now gladly takes them. The delivery and packaging is also satisfactory. Would surely recommend. </p>
-						</div>
-						<div class="row pt-2 mx-1">
-							<hr>
-						</div>
-						<div class="row justify-content-between text-muted pt-0">
-							<div class="col">
-								<small>
-									<i class="far fa-thumbs-up"></i> Helpful
-									<i class="fas fa-share-alt ms-2"></i> Share
-								</small>
-							</div>
-							<div class="col text-end">
-								<small>
-									<i class="far fa-flag"></i> Report
-								</small>
-							</div>
-							
-						</div>
-						<a class="stretched-link" href="#"></a>
-					</div>
-				</div>
-
+				{% endfor %}
 				<div class="b-example-divider"> </div>
-
-
 			</div>
 			<!-- /Reviews Section End -->
 
@@ -440,6 +393,7 @@
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
 			$("#rate-star_1").addClass("fas fa-star fa-3x text-danger");
 			$("#rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");	
+		  	window.location.href = "../../../review/{{business.name|slugify}}/{{business.id}}/?rate=1";
 		});
 
 		// Hover rate-star_2
@@ -458,6 +412,7 @@
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
 			$("#rate-star_1, #rate-star_2").addClass("fas fa-star fa-3x text-danger text-opacity-75");
 			$("#rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");	
+		  	window.location.href = "../../../review/{{business.name|slugify}}/{{business.id}}/?rate=2";
 		});
 
 		// Hover rate-star_3
@@ -475,7 +430,8 @@
 			$(this).off('mouseenter mouseleave');
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
 			$("#rate-star_1, #rate-star_2, #rate-star_3").addClass("fas fa-star fa-3x text-success text-opacity-50");	
-			$("#rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star"); 	
+			$("#rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star"); 
+		  	window.location.href = "../../../review/{{business.name|slugify}}/{{business.id}}/?rate=3";	
 		});
 
 		// Hover rate-star_4
@@ -494,6 +450,7 @@
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4").addClass("fas fa-star fa-3x text-success text-opacity-75");	
 			$("#rate-star_5").addClass("far fa-star fa-3x text-muted rate-star"); 
+		  	window.location.href = "../../../review/{{business.name|slugify}}/{{business.id}}/?rate=4";
 		});
 
 		// Hover rate-star_5
@@ -510,9 +467,12 @@
 			$(this).off('mouseenter mouseleave');
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("fas fa-star fa-3x text-success");
+		  	window.location.href = "../../../review/{{business.name|slugify}}/{{business.id}}/?rate=5";
 		});
 
-		//fas fa-star fa-3x text-success
+		function reviewBusiness(rate){
+			alert(rate);
+		}
 		
 	</script>
 {% endblock %}

@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.utils.text import slugify
 
 from business.models import Category, Business, Review, UserProfile, Confirm_Email
 from business.forms import UserProfileForm
@@ -14,9 +16,42 @@ from . import settings
 from validate_email import validate_email
 import random
 
+
+def check_user_settings(user):
+	profile = UserProfile.objects.filter(user=user.id)
+	return profile.count()>=1
+
+
 def index(request):
+	# Get Category and Review Data
 	categories = Category.objects.all()
-	return render(request, 'reviews/index.html', {'categories': categories})
+	all_reviews = Review.objects.all()
+	reverse_reviews = all_reviews.order_by('date_created').reverse().distinct()
+	# Initiate Slider Reviews Variable
+	reviews1 = None
+	reviews2 = None
+	reviews3 = None
+	# Check if their is enough review to populate all homepage slider
+	if reverse_reviews.count() >= 15:
+		# If more than 14 reviews populate all 3 review slider
+		reviews1 = reverse_reviews[0:5]
+		reviews2 = reverse_reviews[5:10]
+		reviews3 = reverse_reviews[10:15]
+	elif reverse_reviews.count() >= 10:
+		# If more than 9 reviews populate only 2 review slider 
+		reviews1 = reverse_reviews[0:5]
+		reviews2 = reverse_reviews[5:10]
+	elif reverse_reviews.count() >= 5: 
+		# If more than 4 reviews populate only 1 review slider 
+		# Their will be no sliding animation
+		reviews1 = reverse_reviews[0:5]
+	else:
+		# If less than 4 reviews populate only 1 review slider
+		# Their will be no sliding animation
+		reviews1 = reverse_reviews
+		
+	reviews = [reviews1, reviews2, reviews3]
+	return render(request, 'reviews/index.html', {'categories': categories, 'reviews': reviews})
 
 
 def category_reviews(request, slug, category_id):
@@ -31,10 +66,117 @@ def business_reviews(request, slug, business_id):
 	return render(request, 'reviews/business-reviews.html', {'business': business})
 
 
+def profile_reviews(request, slug, user_id):
+	profile = UserProfile.objects.get(id=int(user_id))
+	return render(request, 'reviews/profile-reviews.html', {'profile': profile})
+
+
+@login_required(login_url='/login/')
+def review_business(request, slug, business_id):
+	business = Business.objects.get(id=int(business_id))
+	if request.is_ajax():
+		# Get Data: business, user, rating, title, review
+		rate = request.GET['rate']
+		review = request.GET['review']
+		title = request.GET['title']
+		# Add Rating 
+		new_review = Review(business=business, user=request.user, rating=rate, title=title, 
+			review=review)
+		new_review.save()
+		# Redirect Url
+		url = 'review/' + slugify(title) + '/' + str(new_review.id) + '/'
+		# Ajax Response
+		return JsonResponse({"success": "Review Submitted.", "redirect": "../../../"+url})
+	else:
+		# GET Data if any
+		rate = int(request.GET.get('rate', 0))
+		
+		return render(request, 'reviews/review-business.html', {'business': business, 'rate': rate})
+
+
+@login_required(login_url='/login/')
+@user_passes_test(check_user_settings, login_url='/manage/')
+def my_reviews(request):
+	reviews = Review.objects.filter(user=request.user.id)
+	profile = UserProfile.objects.get(user=int(request.user.id))
+	return render(request, "reviews/my-reviews.html", {"reviews": reviews, "profile": profile})
+
+
+@login_required(login_url='/login/')
+@user_passes_test(check_user_settings, login_url='/manage/')
+def my_review(request, slug, review_id):
+	reviews = Review.objects.filter(id=int(review_id))
+	review = None
+	if reviews.count() > 0:
+		review = reviews[0]
+	profile = UserProfile.objects.get(user=int(request.user.id))
+	return render(request, "reviews/my-review.html", {"review": review, "profile": profile})
+
+
+@login_required(login_url='/login/')
+@user_passes_test(check_user_settings, login_url='/manage/')
+def edit_review(request, slug, review_id):
+	# Get the User Review to be editted
+	reviews = Review.objects.filter(id=int(review_id), user=request.user.id)
+	review = None
+	# Check if Review Exist
+	if reviews.count() > 0:
+		# Review Exist
+		review = reviews[0]
+		# Check if request is AJAX
+		if request.is_ajax():
+			# Get Data: business, user, rating, title, review, id
+			rate = request.GET['rate']
+			user_review = request.GET['review']
+			title = request.GET['title']
+			ajax_review_id = int(request.GET['id'])
+			# Update Review if ID match
+			if ajax_review_id == review.id: 
+				# Update Review
+				review.title = title
+				review.rating = rate
+				review.review = user_review
+				review.save()
+				# Redirect Url
+				url = 'review/' + slugify(title) + '/' + str(review.id) + '/'
+				# Ajax Succeful Response
+				return JsonResponse({"success": "Review Updated.", "redirect": "../../../../"+url})
+			else:
+				# Ajax Failure Response
+				return JsonResponse({"error": "An Error Occured. Refresh the page and Try Again."})
+		else:
+			# if Request is not AJAX return a HTML VIEW to edit the Review
+			return render(request, "reviews/edit-review.html", {"review": review})
+	else:
+		return HttpResponse("Access Denied: <a href='../../../'>Back home</a>")
+
+
+@login_required(login_url='/login/')
+@user_passes_test(check_user_settings, login_url='/manage/')
+def delete_review(request, slug, review_id):
+	# Check if request is AJAX
+	if request.is_ajax():
+		reviews = Review.objects.filter(id=int(review_id), user=request.user.id)
+		review = None
+		if reviews.count() > 0:
+			review = reviews[0]
+			reviews.delete()
+			url = 'my-reviews/'
+			# Ajax Succeful Response
+			return JsonResponse({"success": "Review Deleted.", "redirect": "../../../../"+url})
+		else:
+			# Ajax Failure Response
+			return JsonResponse({"error": "Access Denied."})
+	else:
+		return HttpResponse("An Error Occured. Please Try Again Later.")
+
+
+
 def auth_login(request):
 	return render(request, 'reviews/users.html')
 
-# Manage User-logins
+
+@login_required(login_url='/login/')
 def manage(request):
 	# Check if user has logged In for the first time
 	try:
@@ -48,6 +190,9 @@ def manage(request):
 		# Redirect to Updating user data if object does-not exist
 		return redirect('update-user')
 
+
+@login_required(login_url='/login/')
+@user_passes_test(check_user_settings, login_url='/manage/')
 def update_details(request):
 	# Get profile details
 	profile = UserProfile.objects.get(user=int(request.user.id))
@@ -65,6 +210,7 @@ def update_details(request):
 	else:
 		form = UserProfileForm(instance=profile)
 		return render(request, 'reviews/profile-settings.html', {'profile': profile, 'form': form})
+
 
 def check_email(request):
 	if request.method == 'GET':
@@ -175,7 +321,6 @@ def check_email(request):
 def validate_new_email(email):
 	is_valid = validate_email(email, verify=True)
 	return is_valid
-
 
 
 def send_code_email(email, name):

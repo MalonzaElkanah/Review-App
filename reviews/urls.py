@@ -26,6 +26,12 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('categories/<slug:slug>/<int:category_id>/', views.category_reviews, name='category-reviews'),
     path('business/<slug:slug>/<int:business_id>/', views.business_reviews, name='business-reviews'),
+    path('profile/<slug:slug>/<int:user_id>/', views.profile_reviews, name='profile-reviews'),
+    path('write/review/<slug:slug>/<int:business_id>/', views.review_business, name='review-business'),
+    path('my-reviews/', views.my_reviews, name='my-reviews'),
+    path('review/<slug:slug>/<int:review_id>/', views.my_review, name='my-review'),
+    path('edit/review/<slug:slug>/<int:review_id>/', views.edit_review, name='edit-review'),
+    path('delete/review/<slug:slug>/<int:review_id>/', views.delete_review, name='delete-review'),
 
     path('admin/', admin.site.urls, name='administrator'),
     path('', include('social_django.urls', namespace='social')),

@@ -44,7 +44,7 @@
         <!-- /Banner Section Ends -->
 
         <!-- Category Section Start -->
-        <div class="container px-4 py-5" id="icon-grid">
+        <div class="container px-4 py-5 text-center" id="icon-grid">
             <h2 class="pb-2 border-bottom">Explore Top Categories</h2>
             <div class="row row-cols-1 row-cols-sm-1 row-cols-md-4 row-cols-lg-2 g-4 py-5">
             {% for category in categories %}
@@ -65,12 +65,24 @@
             <h2>Recent Reviews</h2>
             <div id="carouselReviews" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
+                {% for review_data in reviews %}
+                    {% if review_data != None %}
+                    <div class="{% cycle 'carousel-item active' 'carousel-item' 'carousel-item' %}">
                         <div class="row me-3">
+                        {% for review in review_data %}
                             <div href="#" class="card col-sm-6 col-md-4 col-lg-3 text-start">
                                 <div class="card-body">
                                     <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-0.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
+                                        <img src="{{review.user_profile.image.url}}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
+                                    {% if review.rating == 5 %}
+                                        <div class="d-flex ms-4 pt-2">
+                                            <i class="fas fa-star fa-lg text-success"></i>
+                                            <i class="fas fa-star fa-lg text-success"></i>
+                                            <i class="fas fa-star fa-lg text-success"></i>
+                                            <i class="fas fa-star fa-lg text-success"></i>
+                                            <i class="fas fa-star fa-lg text-success"></i>
+                                        </div>
+                                    {% elif review.rating == 4 %}
                                         <div class="d-flex ms-4 pt-2">
                                             <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
                                             <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
@@ -78,24 +90,23 @@
                                             <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
                                             <i class="far fa-star fa-lg text-secondary"></i>
                                         </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div href="#" class="card col-sm-6 col-md-4 col-lg-3 text-start">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-4.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
+                                    {% elif review.rating == 3 %}
+                                        <div class="d-flex ms-4 pt-2">
+                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                            <i class="far fa-star fa-lg text-secondary"></i>
+                                            <i class="far fa-star fa-lg text-secondary"></i>
+                                        </div>
+                                    {% elif review.rating == 2 %}
+                                        <div class="d-flex ms-4 pt-2">
+                                            <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                            <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                            <i class="far fa-star fa-lg text-secondary"></i>
+                                            <i class="far fa-star fa-lg text-secondary"></i>
+                                            <i class="far fa-star fa-lg text-secondary"></i>
+                                        </div>
+                                    {% elif review.rating == 1 %}
                                         <div class="d-flex ms-4 pt-2">
                                             <i class="fas fa-star fa-lg text-danger"></i>
                                             <i class="far fa-star fa-lg text-secondary"></i>
@@ -103,320 +114,37 @@
                                             <i class="far fa-star fa-lg text-secondary"></i>
                                             <i class="far fa-star fa-lg text-secondary"></i>
                                         </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>JR Kerry </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div href="#" class="card col-sm-6 col-md-4 col-lg-3 text-start">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-3.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
+                                    {% else %}
                                         <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
-                                            <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                            <i class="far fa-star fa-lg text-secondary"></i>
+                                            <i class="far fa-star fa-lg text-secondary"></i>
                                             <i class="far fa-star fa-lg text-secondary"></i>
                                             <i class="far fa-star fa-lg text-secondary"></i>
                                             <i class="far fa-star fa-lg text-secondary"></i>
                                         </div>
+                                    {% endif %}
                                     </div>
                                     <div class="row pt-2">
                                         <p class="card-subtitle mb-2"> 
-                                            <strong>Ruby Kelly</strong>
+                                            <a href="{% url 'profile-reviews' review.user.first_name|slugify review.user_profile.id %}" class="text-decoration-none text-reset">
+                                                <strong>{{review.user.first_name}} </strong>
+                                            </a>
                                             <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
+                                            <a href="{% url 'business-reviews' review.business.name|slugify review.business.id %}" class="text-decoration-none text-reset">
+                                                <strong>{{review.business.name}}.</strong>
+                                            </a> 
                                         </p>
                                     </div>
                                     <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
+                                        <p class="card-text"><em>"{{review.review}}"</em></p>
                                     </div>
                                 </div>
                             </div>
-                            <div href="#" class="card col-sm-6 col-md-4 col-lg-3 text-start">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-2.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                            
+                        {% endfor %}                            
                         </div>
                     </div>
-                    <div class="carousel-item">
-                        <div class="row row-cols-lg me-3">
-                            <div href="#" class="card col text-start ms-2 me-2">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-2.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="far fa-star fa-lg text-secondary"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div href="#" class="card col text-start ms-2 me-2">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-3.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div href="#" class="card col text-start ms-2 me-2">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-4.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div href="#" class="card col text-start ms-2 me-2">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-5.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="far fa-star fa-lg text-secondary"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div href="#" class="card col text-start ms-2 me-2">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-6.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row row-cols-lg me-3">
-                            <div href="#" class="card col text-start ms-2 me-2">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-7.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div href="#" class="card col text-start ms-2 me-2">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-8.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div href="#" class="card col text-start ms-2 me-2">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-9.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div href="#" class="card col text-start ms-2 me-2">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-10.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
-                                            <i class="far fa-star fa-lg text-secondary"></i>
-                                            <i class="far fa-star fa-lg text-secondary"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div href="#" class="card col text-start ms-2 me-2">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="{% static 'main/images/profiles/avatar-11.jpg' %}" class="rounded-circle float-start" width="40px" height="40px" alt="e">
-                                        <div class="d-flex ms-4 pt-2">
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="fas fa-star fa-lg text-success"></i>
-                                            <i class="far fa-star fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-subtitle mb-2"> 
-                                            <strong>John Kennedy </strong>
-                                            <span class="text-muted">reviewed</span>
-                                            <strong> Pickle Sales.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <p class="card-text"><em>"Some quick example text to build on the card title and make up the bulk of the card's content."</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
+                {% endfor %}
                 </div>
             </div>
             

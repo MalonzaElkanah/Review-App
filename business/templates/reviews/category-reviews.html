@@ -43,7 +43,7 @@
 								<ul class="list-group">
 								{% for cat in categories %}
 									<li class="list-group-item">
-										<a href="{% url 'category-reviews' category.name|slugify category.id %}">{{cat.name}}</a>
+										<a href="{% url 'category-reviews' cat.name|slugify cat.id %}" class="text-decoration-none text-reset">{{cat.name}}</a>
 									</li>
 								{% endfor %}
 								</ul>
@@ -165,13 +165,45 @@
 								</div>
 								<div class="row d-flex">
 									<div class="d-flex">
+									{% if business.rating > 4.5 %}
                                         <i class="fas fa-star fa-lg text-success"></i>
                                         <i class="fas fa-star fa-lg text-success"></i>
                                         <i class="fas fa-star fa-lg text-success"></i>
                                         <i class="fas fa-star fa-lg text-success"></i>
                                         <i class="fas fa-star fa-lg text-success"></i>
-                                        <p class="ms-2"> 2345 reviews</p> 
-                                        <p class="ms-2"> Average Rate 4.5</p>
+                                    {% elif business.rating > 3.5 %}
+                                    	<i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                        <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                        <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                        <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                        <i class="far fa-star fa-lg text-muted"></i>
+                                    {% elif business.rating > 2.5 %}
+                                    	<i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                        <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                        <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                        <i class="far fa-star fa-lg text-muted"></i>
+                                        <i class="far fa-star fa-lg text-muted"></i>
+                                    {% elif business.rating > 1.5 %}
+                                    	<i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                        <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                        <i class="far fa-star fa-lg text-muted"></i>
+                                        <i class="far fa-star fa-lg text-muted"></i>
+                                        <i class="far fa-star fa-lg text-muted"></i>
+                                    {% elif business.rating > 0.0 %}
+                                    	<i class="fas fa-star fa-lg text-danger"></i>
+                                        <i class="far fa-star fa-lg text-muted"></i>
+                                        <i class="far fa-star fa-lg text-muted"></i>
+                                        <i class="far fa-star fa-lg text-muted"></i>
+                                        <i class="far fa-star fa-lg text-muted"></i>
+                                    {% else %}
+                                    	<i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                        <i class="fas fa-star fa-lg text-success"></i>
+                                    {% endif %}
+                                        <p class="ms-2"> {{business.reviews_count}} reviews</p> 
+                                        <p class="ms-2"> Average Rate {{business.rating}}</p>
                                     </div>
 								</div>
 								<div class="row">

@@ -24,7 +24,7 @@
         <!-- Naviigation Section Start  -->
         <nav class="navbar navbar-expand-md fixed-top navbar-dark mb-5" style="background-color: #000032">
             <div class="container-fluid">
-                <a class="navbar-brand ms-5 p-3" href="#">
+                <a class="navbar-brand ms-5 p-3" href="{% url 'index' %}">
                 <img src="{% static 'main/images/bootstrap-logo.svg' %}" alt="" width="30" height="24" class="d-inline-block align-text-top">
                 Biz-Views
                 </a>
@@ -39,7 +39,7 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
                     <ul class="navbar-nav me-5">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Categories</a>
@@ -50,8 +50,8 @@
                                 <img src="{% static 'main/images/profiles/avatar-2.jpg' %}" alt="" width="30" height="30" class="rounded-circle d-inline-block"><span class="ms-2 text-light">{{user.first_name}}</span> 
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">My Reviews</a></li>
-                                <li><a class="dropdown-item" href="#">My Settings</a></li>
+                                <li><a class="dropdown-item" href="{% url 'my-reviews' %}">My Reviews</a></li>
+                                <li><a class="dropdown-item" href="{% url 'update-user' %}">My Settings</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Log-Out</a></li>
                             </ul>
@@ -151,6 +151,14 @@
           </footer>
         </div>
         <!-- /Footer Section Ends -->
+
+        <!-- Modal Section Starts -->
+        {% block modal %}
+        
+        {% endblock %}
+        <!-- /Modal Section Ends -->
+
+
 
         <!-- Frameworks JS -->
         <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script> -->

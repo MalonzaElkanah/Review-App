@@ -1,0 +1,156 @@
+{% extends "reviews/base.html" %}
+
+{% load static %}
+
+{% block title %} {{profile.user.first_name}} Reviews {% endblock %}
+
+{% block content %}
+<main class="main-index">
+	<!-- Breadcrumb and Title Section -->
+	<div class="b-example-divider"> </div>
+	<div class="container-fluid card pt-5">
+		<div class="card-body">
+			<div class="container">
+				<nav aria-label="breadcrumb">
+				  	<ol class="breadcrumb">
+				    	<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+				    	<li class="breadcrumb-item active" aria-current="page">{{profile.user.first_name}} Reviews</li>
+				  	</ol>
+				</nav>
+				<div class="row">
+					<div class="col-6">
+						<div class="row">
+							<div class="col-3">
+								<img src="{% static 'main/images/profiles/avatar-2.jpg' %}" class="img-thumbnail" alt="...">
+							</div>
+							<div class="col-9">
+								<h1>{{profile.user.first_name}}</h1>
+								<p class="text-muted">Reviews {{profile.my_reviews_count}} </p>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row">
+							<div class="b-example-divider"> </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Breadcrumb and Title Section End -->
+
+	<!-- Content Section Start -->
+	<div class="b-example-divider"> </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-8">
+			{% for review in profile.my_reviews %}
+				<label>Review of <a href="{% url 'business-reviews' review.business.name|slugify review.business.id %}">{{review.business.name}}</a> </label>
+				<div class="row mb-3 card">
+					<div class="card-body p-4">
+						<div class="row">
+							<div class="d-flex">
+                                <img src="{% static 'main/images/profiles/avatar-8.jpg' %}" class="rounded-circle float-start" width="50px" height="50px" alt="e">
+                                <div class="px-3">
+                                	<div>{{review.user.first_name}}</div>
+                                	<div class="d-flex">
+                                		<small>
+                                			<i class="fas fa-pen"></i> 
+                                			<span class="text-muted">{{review.user_reviews_count}} reviews </span>
+                                			<i class="fas fa-map-marker-alt ps-2"></i> 
+                                			<span class="text-muted"> Nairobi, Ke</span>
+                                		</small>
+                                	</div>
+                                </div>
+                            </div>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row">
+							<div class="row justify-content-between">
+							{% if review.rating == 5 %}
+								<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                </div>
+                            {% elif review.rating == 4 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% elif review.rating == 3 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% elif review.rating == 2 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% elif review.rating == 1 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-danger"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% else %}
+                            	<div class="col d-flex">
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% endif %}
+
+                                <div class="col text-end text-muted">{{review.date_created|timesince}} Ago</div>
+							</div>
+						</div>
+						<div class="row pt-2">
+							<h5 class="card-title">{{review.title}}</h5>
+							<p class="card-text">{{review.review}} </p>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row justify-content-between text-muted pt-0">
+							<div class="col">
+								<small>
+									<i class="far fa-thumbs-up"></i> Helpful
+									<i class="fas fa-share-alt ms-2"></i> Share
+								</small>
+							</div>
+							<div class="col text-end">
+								<small>
+									<i class="far fa-flag"></i> Report
+								</small>
+							</div>
+						</div>
+						<a class="stretched-link" href="{% url 'my-review' review.title|slugify review.id %}"></a>
+					</div>
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+	<!-- /Content Section End -->
+	<div class="b-example-divider"> </div>
+</main>
+{% endblock %}

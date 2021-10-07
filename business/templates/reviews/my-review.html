@@ -1,0 +1,234 @@
+{% extends "reviews/base.html" %}
+
+{% load static %}
+
+{% block title %} Review - {{review.title}} {% endblock %}
+
+{% block content %}
+<main class="main-index">
+	<!-- Breadcrumb and Title Section -->
+	<div class="b-example-divider"> </div>
+	<div class="container-fluid card pt-5">
+		<div class="card-body">
+			<div class="container">
+				<nav aria-label="breadcrumb">
+				  	<ol class="breadcrumb">
+				    	<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+				    	<li class="breadcrumb-item active" aria-current="page">Review</li>
+				  	</ol>
+				</nav>
+				<div class="row">
+					<div class="col-6">
+						<div class="row">
+							<div class="col-3">
+								<img src="{% static 'main/images/profiles/avatar-2.jpg' %}" class="img-thumbnail" alt="...">
+							</div>
+							<div class="col-9">
+								<h1>{{user.username}}</h1>
+								<p class="text-muted">Reviews {{profile.my_reviews_count}} </p>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row">
+							<div class="col-4">
+								<h2>{{profile.my_reviews_count}}</h2>
+								<p>
+									<i class="fas fa-star"></i> 
+									<strong>Reviews</strong> 
+								</p>
+							</div>
+
+							<div class="col-4">
+								<h2>0</h2>
+								<p>
+									<i class="fas fa-user-circle"></i> 
+									<strong>Reads</strong> 
+								</p>
+							</div>
+
+							<div class="col-4">
+								<h2>0</h2>
+								<p>
+									<i class="fas fa-thumbs-up"></i> 
+									<strong>Useful</strong> 
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Breadcrumb and Title Section End -->
+
+	<!-- Content Section Start -->
+	<div class="b-example-divider"> </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-8">
+				<label>Review of <a href="{% url 'business-reviews' review.business.name|slugify review.business.id %}">{{review.business.name}}</a> </label>
+			<!-- Review Card -->
+				<div class="row mt-3 card">
+					<div class="card-body p-4">
+						<div class="row">
+							<div class="d-flex">
+                                <img src="{% static 'main/images/profiles/avatar-8.jpg' %}" class="rounded-circle float-start" width="50px" height="50px" alt="e">
+                                <div class="px-3">
+                                	<div>{{review.user.first_name}}</div>
+                                	<div class="d-flex">
+                                		<small>
+                                			<i class="fas fa-pen"></i> 
+                                			<span class="text-muted">{{review.user_reviews_count}} reviews </span>
+                                			<i class="fas fa-map-marker-alt ps-2"></i> 
+                                			<span class="text-muted"> Nairobi, Ke</span>
+                                		</small>
+                                	</div>
+                                </div>
+                            </div>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row">
+							<div class="row justify-content-between">
+							{% if review.rating == 5 %}
+								<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                    <i class="fas fa-star fa-lg text-success"></i>
+                                </div>
+                            {% elif review.rating == 4 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% elif review.rating == 3 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% elif review.rating == 2 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                    <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% elif review.rating == 1 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% else %}
+                            	<div class="col d-flex">
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                    <i class="far fa-star fa-lg text-muted"></i>
+                                </div>
+                            {% endif %}
+
+                                <div class="col text-end text-muted">{{review.date_created|timesince}} Ago</div>
+							</div>
+						</div>
+						<div class="row pt-2">
+							<h5 class="card-title">{{review.title}}</h5>
+							<p class="card-text">{{review.review}} </p>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+
+						<div class="row justify-content-between text-muted pt-0">
+							<div class="col">
+								<small>
+									<a class="card-link" href="{% url 'edit-review' review.title|slugify review.id %}"> <i class="far fa-edit"></i> Edit</a>
+									<a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="far fa-trash-alt ms-2"></i> Delete</a>
+									<i class="fas fa-share-alt ms-2"></i> Share
+								</small>
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- /Review Card -->
+
+			</div>
+		</div>
+	</div>
+	<!-- /Content Section End -->
+	<div class="b-example-divider"> </div>
+</main>
+{% endblock %}
+
+{% block modal %}
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<h5 class="modal-title" id="exampleModalLabel">{{review.title}}</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		    </div>
+      		<div class="modal-body">
+		        <label>Delete this review?</label>
+		    </div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        		<a id="deleteModalButton" href="{% url 'delete-review' review.title|slugify review.id %}" class="btn btn-danger">DELETE</a>
+      		</div>
+    	</div>
+  	</div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+	$("#deleteModalButton").click(function(event){
+		event.preventDefault()
+		// Add Spinner to Button
+   		var spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>' +
+  			'deleting...';
+		$("#deleteModalButton").html(spinner);
+		// Disable button
+		$("#deleteModalButton").addClass('disabled');
+		$.ajax({
+   			url: $(this).attr('href'),
+   			success: function(response){
+   				console.log(response);
+	            if(response['success']) {
+	            	alert(response['success']);
+	            	if(response['redirect']) {
+	            		window.location.href = response['redirect'];
+	            	}else{
+	            		window.location.href = "../../../";
+	            	}
+	            }
+	            if(response['error']) {
+	            	$("#deleteModalButton").html("DELETE REVIEW");
+	            	$("#deleteModalButton").removeClass('disabled');
+	            	alert(response['error']);
+
+	            }
+   			},
+	        error: function (request, status, error) {
+	        	$("#deleteModalButton").html("DELETE REVIEW");
+	        	$("#deleteModalButton").removeClass('disabled');
+	            console.log(request.responseText);
+	        }
+   		});
+	});
+</script>
+{% endblock %}
