@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Avg
+
 from urllib.parse import urlparse
 
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	image = models.ImageField('Profile Image', upload_to='Image/Settings/ProfileImages', 
-		max_length=500, default='dummy.png')
+		max_length=500, default='Image/Settings/ProfileImages/dummy.png')
 	language = models.CharField('Langauge', default='English', max_length=50)
 	# user, image, language
 
@@ -31,6 +33,23 @@ class Category(models.Model):
 	def my_businesses(self):
 		return Business.objects.filter(category= self.id)
 
+	def my_businesses_ordered(self):
+		businesses = Business.objects.filter(category= self.id)
+		ordered_businesses = []
+		for business in businesses:
+			ordered_businesses = ordered_businesses + [business]
+		for dummy in ordered_businesses:
+			index = 0
+			for business in ordered_businesses:
+				if (index+1) == len(ordered_businesses):
+					break
+				else:
+					if business.rating() < ordered_businesses[index+1].rating():
+						ordered_businesses[index] = ordered_businesses[index+1]
+						ordered_businesses[index+1] = business
+				index += 1
+		return ordered_businesses
+
 
 class Business(models.Model):
 	name = models.CharField('Business Name', max_length=50, unique=True)
@@ -46,6 +65,7 @@ class Business(models.Model):
 	town = models.CharField('Town', max_length=50)
 	status = models.CharField('Status', max_length=50, default="unverified")
 	date_created = models.DateTimeField('Date Created', auto_now_add=True)
+	# name, image, category, description, website, email, phone_number, country, county, town, status
 
 	def __str__(self):
 		return self.name
@@ -59,24 +79,16 @@ class Business(models.Model):
 		return Review.objects.filter(business=self.id)
 
 	def rating(self):
-		reviews = Review.objects.filter(business=self.id)
-		rating_sum = 0
-		for review in reviews:
-			rating_sum = rating_sum + review.rating
-		if rating_sum > 0:
-			rating = (rating_sum/reviews.count()) 
-			return round(rating, 1)
+		rating = Review.objects.filter(business=self.id).aggregate(Avg('rating'))
+		if rating['rating__avg'] is not None:
+			return round(rating['rating__avg'], 1)
 		else:
 			return 0
 
 	def rating_remarks(self):
-		reviews = Review.objects.filter(business=self.id)
-		rating_sum = 0
-		for review in reviews:
-			rating_sum = rating_sum + review.rating
-		if rating_sum > 0:
-			rating = (rating_sum/reviews.count()) 
-			rating = round(rating, 1)
+		rating = Review.objects.filter(business=self.id).aggregate(Avg('rating'))
+		if rating['rating__avg'] is not None:
+			rating = round(rating['rating__avg'], 1)
 			if rating > 4.4:
 				return 'Excellent'
 			elif rating > 3.4:
@@ -137,7 +149,6 @@ class Business(models.Model):
 			return round(percentage)
 		else:
 			return 0
-		
 
 
 		

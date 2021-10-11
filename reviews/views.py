@@ -7,6 +7,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.text import slugify
+from django.db.models import Q
 
 from business.models import Category, Business, Review, UserProfile, Confirm_Email
 from business.forms import UserProfileForm
@@ -17,14 +18,28 @@ from validate_email import validate_email
 import random
 
 
+# Function to check if user has a profile for user_passes_test
 def check_user_settings(user):
 	profile = UserProfile.objects.filter(user=user.id)
 	return profile.count()>=1
 
 
+# Function to return User Profile Settings
+def get_profile(user):
+	if user.is_authenticated:
+		profile = UserProfile.objects.filter(user=user.id)
+		if profile.count()>=1:
+			return profile[0]
+		else:
+			return None
+	else:
+		return None
+
+
 def index(request):
-	# Get Category and Review Data
+	# Initialize Category, User Profile and Review from Models
 	categories = Category.objects.all()
+	profile = get_profile(request.user)
 	all_reviews = Review.objects.all()
 	reverse_reviews = all_reviews.order_by('date_created').reverse().distinct()
 	# Initiate Slider Reviews Variable
@@ -51,25 +66,71 @@ def index(request):
 		reviews1 = reverse_reviews
 		
 	reviews = [reviews1, reviews2, reviews3]
-	return render(request, 'reviews/index.html', {'categories': categories, 'reviews': reviews})
+	return render(request, 'reviews/index.html', {'categories': categories, 'reviews': reviews, 
+		'profile': profile})
 
 
 def category_reviews(request, slug, category_id):
 	category = Category.objects.get(id = int(category_id))
 	categories = Category.objects.all()
+	profile = get_profile(request.user)
 	return render(request, 'reviews/category-reviews.html', {"category": category, 
-		'categories': categories})
+		'categories': categories, 'profile': profile})
 
 
 def business_reviews(request, slug, business_id):
+	# Get Categories and Business Data
+	categories = Category.objects.all()
+	profile = get_profile(request.user)
 	business = Business.objects.get(id=int(business_id))
-	return render(request, 'reviews/business-reviews.html', {'business': business})
+	return render(request, 'reviews/business-reviews.html', {'business': business, 
+		'categories': categories, 'profile': profile})
 
 
 def profile_reviews(request, slug, user_id):
-	profile = UserProfile.objects.get(id=int(user_id))
-	return render(request, 'reviews/profile-reviews.html', {'profile': profile})
+	# Initiate Categories and UserProfile Data
+	categories = Category.objects.all()
+	profile = get_profile(request.user)
+	profile_view = UserProfile.objects.get(id=int(user_id))
+	return render(request, 'reviews/profile-reviews.html', {'profile_view': profile_view, 
+		'categories': categories, 'profile': profile})
 
+
+def search(request):
+	# GET Search Data if any
+	word = request.GET.get('search', None)
+	categories1 = None
+	businesses = None
+	if word is not None:
+		# Search in Category Fields(name), Business Fields(name, description, country, county, town) 
+		if not word == '':
+			businesses = Business.objects.filter(
+				Q(name__contains=word) | Q(description__contains=word) | Q(country__contains=word) | 
+				Q(county__contains=word) | Q(town__contains=word)
+			)
+			categories1 = Category.objects.filter(Q(name__contains=word))
+		elif word == '':
+			categories1 = None
+			businesses = None
+		else:
+			businesses = Business.objects.filter(
+				Q(name__contains=word) | Q(description__contains=word) | Q(country__contains=word) | 
+				Q(county__contains=word) | Q(town__contains=word)
+			)
+			categories = Category.objects.filter(Q(name__contains=word))
+
+	# Initiate Categories, User Profile
+	categories = Category.objects.all()
+	profile = get_profile(request.user)
+	return render(request, 'reviews/search-results.html', {'search': word, 'categories': categories,
+		'businesses': businesses, 'categories1': categories1, 'profile': profile})
+
+
+def about_us(request):
+	# Initiate Categories, User Profile
+	categories = Category.objects.all()
+	profile = get_profile(request.user)
+	return render(request, 'reviews/about-us.html', {'categories': categories, 'profile': profile})
 
 @login_required(login_url='/login/')
 def review_business(request, slug, business_id):
@@ -90,8 +151,11 @@ def review_business(request, slug, business_id):
 	else:
 		# GET Data if any
 		rate = int(request.GET.get('rate', 0))
-		
-		return render(request, 'reviews/review-business.html', {'business': business, 'rate': rate})
+		# Initiate Categories
+		categories = Category.objects.all()		
+		profile = get_profile(request.user)
+		return render(request, 'reviews/review-business.html', {'business': business, 'rate': rate, 
+			'categories': categories, 'profile': profile})
 
 
 @login_required(login_url='/login/')
@@ -99,7 +163,10 @@ def review_business(request, slug, business_id):
 def my_reviews(request):
 	reviews = Review.objects.filter(user=request.user.id)
 	profile = UserProfile.objects.get(user=int(request.user.id))
-	return render(request, "reviews/my-reviews.html", {"reviews": reviews, "profile": profile})
+	# Initiate Categories
+	categories = Category.objects.all()
+	return render(request, "reviews/my-reviews.html", {"reviews": reviews, "profile": profile, 
+		"categories": categories})
 
 
 @login_required(login_url='/login/')
@@ -110,7 +177,10 @@ def my_review(request, slug, review_id):
 	if reviews.count() > 0:
 		review = reviews[0]
 	profile = UserProfile.objects.get(user=int(request.user.id))
-	return render(request, "reviews/my-review.html", {"review": review, "profile": profile})
+	# Initiate Categories
+	categories = Category.objects.all()
+	return render(request, "reviews/my-review.html", {"review": review, "profile": profile, 
+		"categories": categories})
 
 
 @login_required(login_url='/login/')
@@ -171,7 +241,6 @@ def delete_review(request, slug, review_id):
 		return HttpResponse("An Error Occured. Please Try Again Later.")
 
 
-
 def auth_login(request):
 	return render(request, 'reviews/users.html')
 
@@ -209,7 +278,10 @@ def update_details(request):
 		return redirect('update-user')
 	else:
 		form = UserProfileForm(instance=profile)
-		return render(request, 'reviews/profile-settings.html', {'profile': profile, 'form': form})
+		# Initiate Categories
+		categories = Category.objects.all()
+		return render(request, 'reviews/profile-settings.html', {'profile': profile, 'form': form, 
+			'categories': categories})
 
 
 def check_email(request):
@@ -343,3 +415,4 @@ def send_code_email(email, name):
 	except BadHeaderError:
 		return False
 	return True
+

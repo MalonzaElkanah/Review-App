@@ -27,6 +27,7 @@ urlpatterns = [
     path('categories/<slug:slug>/<int:category_id>/', views.category_reviews, name='category-reviews'),
     path('business/<slug:slug>/<int:business_id>/', views.business_reviews, name='business-reviews'),
     path('profile/<slug:slug>/<int:user_id>/', views.profile_reviews, name='profile-reviews'),
+    path('search/', views.search, name='search'),
     path('write/review/<slug:slug>/<int:business_id>/', views.review_business, name='review-business'),
     path('my-reviews/', views.my_reviews, name='my-reviews'),
     path('review/<slug:slug>/<int:review_id>/', views.my_review, name='my-review'),
@@ -42,5 +43,5 @@ urlpatterns = [
     path('check-email/', views.check_email, name='check-email'),
     
     path('login/', views.auth_login, name='login'),
-    
+    path('about-us/', views.about_us, name='about-us'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

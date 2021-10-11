@@ -57,7 +57,7 @@
 							</div>
 							<div class="col-4">
 								<p class="text-muted">
-									<a href="">Reset filters</a>
+									<a id="reset-filters" href="#">Reset filters</a>
 								</p>
 							</div>
 							<div class="col-12 pb-5">
@@ -65,74 +65,45 @@
 									<label  for="region-input" class="form-label"> County or Town</label>
 									<input id="region-input" class="form-control" type="text" name="region">
 								</div>
-								<button class="btn btn-outline-dark" type="search"> Apply</button>
+								<a id="filter-region-button" class="btn btn-outline-dark" href="#"> Apply</a>
 							</div>
 							<div class="col-12 pb-5">
 								<div class="mb3">
 									<label  for="region-input" class="form-label">No. of Reviews</label>
 									<div class="form-check pb-2">
-									  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-									  	<label class="form-check-label text-muted" for="flexRadioDefault1">
+									  	<input class="form-check-input review-number" type="radio" name="reviewNumberRadio" id="reviewNumberRadio1" value="0">
+									  	<label class="form-check-label text-muted" for="reviewNumberRadio1">
 									    	All
 									  	</label>
 									</div>
 									<div class="form-check pb-2">
-									  	<input class="form-check-input" type="radio" name="flexRadioDefault text-muted" id="flexRadioDefault2" checked>
-									  	<label class="form-check-label text-muted" for="flexRadioDefault2">
+									  	<input class="form-check-input review-number" type="radio" name="reviewNumberRadio" id="reviewNumberRadio2" value="16" checked>
+									  	<label class="form-check-label text-muted" for="reviewNumberRadio2">
+									    	15+
+									  	</label>
+									</div>
+									<div class="form-check pb-2">
+									  	<input class="form-check-input review-number" type="radio" name="reviewNumberRadio" id="reviewNumberRadio1" value="27">
+									  	<label class="form-check-label text-muted" for="reviewNumberRadio1">
 									    	25+
 									  	</label>
 									</div>
 									<div class="form-check pb-2">
-									  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-									  	<label class="form-check-label text-muted" for="flexRadioDefault1">
+									  	<input class="form-check-input review-number" type="radio" name="reviewNumberRadio" id="reviewNumberRadio1" value="57">
+									  	<label class="form-check-label text-muted" for="reviewNumberRadio1">
 									    	50+
 									  	</label>
 									</div>
 									<div class="form-check pb-2">
-									  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-									  	<label class="form-check-label text-muted" for="flexRadioDefault1">
+									  	<input class="form-check-input review-number" type="radio" name="reviewNumberRadio" id="reviewNumberRadio1" value="108">
+									  	<label class="form-check-label text-muted" for="reviewNumberRadio1">
 									    	100+
 									  	</label>
 									</div>
-									<div class="form-check pb-2">
-									  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-									  	<label class="form-check-label text-muted" for="flexRadioDefault1">
-									    	250+
-									  	</label>
-									</div>
 									<div class="form-check">
-									  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-									  	<label class="form-check-label text-muted" for="flexRadioDefault1">
-									    	500+
-									  	</label>
-									</div>
-								</div>
-							</div>
-							<div class="col-12 pb-5">
-								<div class="mb3">
-									<label  for="region-input" class="form-label">Time Period</label>
-									<div class="form-check pb-2">
-									  	<input class="form-check-input" type="radio" name="flexRadio" id="flexRadio1">
-									  	<label class="form-check-label text-muted" for="flexRadio1">
-									    	All Time
-									  	</label>
-									</div>
-									<div class="form-check pb-2">
-									  	<input class="form-check-input" type="radio" name="flexRadio text-muted" id="flexRadio2" checked>
-									  	<label class="form-check-label text-muted" for="flexRadio2">
-									    	6 Months
-									  	</label>
-									</div>
-									<div class="form-check pb-2">
-									  	<input class="form-check-input" type="radio" name="flexRadio" id="flexRadio3">
-									  	<label class="form-check-label text-muted" for="flexRadio3">
-									    	12 Months
-									  	</label>
-									</div>
-									<div class="form-check pb-2">
-									  	<input class="form-check-input" type="radio" name="flexRadio" id="flexRadio3">
-									  	<label class="form-check-label text-muted" for="flexRadio3">
-									    	18 Months
+									  	<input class="form-check-input review-number" type="radio" name="reviewNumberRadio" id="reviewNumberRadio1" value="251">
+									  	<label class="form-check-label text-muted" for="reviewNumberRadio1">
+									    	250+
 									  	</label>
 									</div>
 								</div>
@@ -149,10 +120,10 @@
 			<div class="col-8">
 				<div class="row">
 					<h5>Top-rated companies</h5>
-					<p class="text-muted">Showing 1-{{category.my_businesses.count}} of {{category.my_businesses.count}} results based on current filters. Ordered by Biz</p>						
+					<p class="text-muted">Showing 1-<span id="biz-count-1" class="biz-count">{{category.my_businesses.count}}</span> of <span id="biz-count-2" class="biz-count">{{category.my_businesses.count}}</span> results based on current filters. Ordered by Biz. <span class="biz-info"> </span></p>						
 				</div>
-				{% for business in category.my_businesses %}
-				<div class="row mb-3 card">
+				{% for business in category.my_businesses_ordered %}
+				<div id="biz-{{forloop.counter}}" class="row mb-3 card biz-card">
 					<div class="card-body">
 						
 						<div class="row">
@@ -210,14 +181,34 @@
 									<p>{{category.name}}</p>
 								</div>
 								<div class="row">
-									<p class="text-muted"><i class="fas fa-map-marker-alt"></i> {{business.town}} {{business.county}}, {{business.country}}</p>
+									<p id="region-{{forloop.counter}}" class="text-muted"><i class="fas fa-map-marker-alt"></i> {{business.town}} - {{business.county}}, {{business.country}}</p>
 								</div>
 							</div>
 						</div>
 						<a class="stretched-link" href="{% url 'business-reviews' business.name|slugify business.id %}"></a>
 					</div>
 				</div>
+					{% if forloop.last %}
+					<input id="total-cards-id" type="hidden" value="{{forloop.counter}}">
+					{% endif %}
 				{% endfor %}
+				<div class="row">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+						    <li class="page-item disabled">
+						    	<a class="page-link">Previous</a>
+						    </li>
+						    <li class="page-item active" aria-current="page">
+						    	<a class="page-link" href="#">1</a>
+						    </li>
+						    <li class="page-item"><a class="page-link" href="#">2</a></li>
+						    <li class="page-item"><a class="page-link" href="#">3</a></li>
+						    <li class="page-item disabled">
+						    	<a class="page-link" href="#">Next</a>
+						    </li>
+						</ul>
+					</nav>
+				</div>
 
 			</div>
 			<!-- Reviews Section Start -->
@@ -227,4 +218,100 @@
 	<!-- /Content Section Ends -->
 	<div class="b-example-divider"> </div>
 </main>
+{% endblock %}
+
+{% block javascript %}
+	<script type="text/javascript">
+		// Change the review number
+		$("input[name=reviewNumberRadio]").change(function(){
+			var number = parseInt($(this).val());
+			$('#biz-count-1').html(number);
+			if (number > 0){
+				$(".biz-card").hide();
+				for (var i = number; i >= 0; i--) {
+					var card_id = "#biz-" + String(i);
+					$(card_id).show();
+				}
+			} else {
+				$(".biz-card").show();
+			}
+		});
+
+		// Filter Country or Region
+		$("#filter-region-button").click(function(event){
+			event.preventDefault();
+			// Add Spinner to Button
+	   		var spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>' +
+	  			'Searching...';
+			$("#filter-region-button").html(spinner);
+			var region = $("#region-input").val().trim();
+			if (region != "") {
+				var biz_num = parseInt($("#total-cards-id").val());
+				$(".biz-card").hide();
+				var count = 0;
+				for (var i = biz_num; i >= 0; i--) {
+					var region_id = "#region-" + String(i);
+					var region_texts = $(region_id).text().split(" ");
+					region_texts.forEach(function(region_text) {
+						if (region_text.toUpperCase().includes(region.toUpperCase())){
+							var card_id = "#biz-" + String(i);
+							$(card_id).show();
+							count = count + 1;
+						}
+					});
+				}
+				$('#biz-count-1').html(count);
+			}
+			$("#filter-region-button").html('Apply');
+		});
+
+		// Reset Filters
+		$("#reset-filters").click(function(event){
+			event.preventDefault();
+			$("#region-input").val(" ");
+			$("#reviewNumberRadio2").prop("checked", true);
+			$(".biz-card").hide();
+			var biz_num = parseInt($("#total-cards-id").val());
+			if (biz_num >= 16){
+				$('#biz-count-1').html(16);
+				for (var i = 16; i >= 0; i--) {
+					var card_id = "#biz-" + String(i);
+					$(card_id).show();
+				}
+			}else{
+				$('#biz-count-1').html(biz_num);
+				for (var i = biz_num; i >= 0; i--) {
+					var card_id = "#biz-" + String(i);
+					$(card_id).show();
+				}
+			}
+		})
+
+		// Load default settings
+		$(function(){
+			// current value
+			var number = parseInt($("input[name=reviewNumberRadio]").val());
+			if (number > 0){
+				var biz_num = parseInt($("#total-cards-id").val());
+				if (biz_num >= number){
+					$('#biz-count-1').html(number);
+					for (var i = number; i >= 0; i--) {
+						var card_id = "#biz-" + String(i);
+						$(card_id).show();
+					}
+				}else{
+					$('#biz-count-1').html(biz_num);
+					for (var i = biz_num; i >= 0; i--) {
+						var card_id = "#biz-" + String(i);
+						$(card_id).show();
+					}
+				}
+			} else {
+				$(".biz-card").show();
+			}
+			// region 
+			$("#region-input").val(" ");
+		});
+		
+	</script>
 {% endblock %}

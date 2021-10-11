@@ -1,0 +1,27 @@
+{% extends "reviews/base.html" %}
+
+{% load static %}
+
+{% block title %} Review - About Us {% endblock %}
+
+{% block content %}
+	<main class="main-index">
+		<div class="b-example-divider"></div>
+
+        <!-- Company-Ad Section Start -->
+        <div class="container-fluid marketing card  pt-5">
+            <div class="row featurette card-body">
+              <div class="col-md-7 pb-3">
+                <h2 class="featurette-heading">Be heard, <span class="text-muted">We protect and promote trust.</span></h2>
+                <p class="lead">BizWise is free and open to every company and consumer everywhere. Sharing your experiences helps others make better choices and companies up their game.</p>
+                <button class="p-2 btn btn-outline-success">WHAT WE DO</button>
+              </div>
+              <div class="col-md-5">
+                <img src="{% static 'main/images/pr1.jpg' %}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"  width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
+
+              </div>
+            </div>
+        </div>
+        <!-- /Company-Ad Section Ends -->
+	</main>
+{% endblock %}

@@ -7,36 +7,23 @@
 {% block content %}        
     <main class="main-index">
         <!-- Banner Section Start -->
-        <div id="carouselExampleSlidesOnly" class="carousel" data-bs-ride="carousel">
+        <div id="carouselExampleSlidesOnly" class="carousel carousel-dark" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="{% static 'main/images/banner/banner-5.jpg' %}" class="d-block w-100" alt="...">
+                    <img src="{% static 'main/images/banner/banner.jpg' %}" class="d-block w-100" alt="...">
                     <div class="container">
-                        <div class="carousel-caption text-start">
-                            <h1>Example headline.</h1>
-                            <p>Some representative placeholder content for the first slide of the carousel.</p>
-                            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+                        <div class="carousel-caption row justify-content-end text-end">
+                            <div class="col-lg-7"> 
+                                <h1>Quality is remembered long after the price is forgotten.</h1>
+                                <p class="text-opacity-50">Read reviews. Write reviews. Find companies.</p>
+                                <form method="get" action="{% url 'search' %}">
+                                    <div class="input-group input-group-lg">
+                                        <input type="search" class="form-control" name="search" placeholder="Business or Category">
+                                        <button type="submit" class="btn btn-lg btn-primary">Search</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{% static 'main/images/banner/banner-5.jpg' %}" class="d-block w-100" alt="...">
-                    <div class="container">
-                        <div class="carousel-caption">
-                            <h1>Another example headline.</h1>
-                            <p>Some representative placeholder content for the second slide of the carousel.</p>
-                            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{% static 'main/images/banner/banner-5.jpg' %}" class="d-block w-100" alt="...">
-                    <div class="container">
-                      <div class="carousel-caption text-end">
-                        <h1>One more for good measure.</h1>
-                        <p>Some representative placeholder content for the third slide of this carousel.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
-                      </div>
                     </div>
                 </div>
           </div>
@@ -160,7 +147,7 @@
               <div class="col-md-7 pb-3">
                 <h2 class="featurette-heading">Be heard, <span class="text-muted">We protect and promote trust.</span></h2>
                 <p class="lead">BizWise is free and open to every company and consumer everywhere. Sharing your experiences helps others make better choices and companies up their game.</p>
-                <button class="p-2 btn btn-outline-success">WHAT WE DO</button>
+                <a class="p-2 btn btn-outline-success" href="{% url 'about-us' %}">WHAT WE DO</a>
               </div>
               <div class="col-md-5">
                 <img src="{% static 'main/images/pr1.jpg' %}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"  width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -203,7 +190,7 @@
                                     <div class="row pt-2 px-4">
                                         <figure>
                                             <blockquote class="blockquote">
-                                                <p class="lead h1">"A well-known quote, contained in a blockquote element."</p>
+                                                <p class="lead h1">"A customer talking about their experience with you is worth ten times that which you write or say about yourself."</p>
                                             </blockquote>
                                             <figcaption class="blockquote-footer">
                                             Someone famous in <cite title="Source Title">Source Title</cite>

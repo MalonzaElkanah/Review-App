@@ -1,0 +1,116 @@
+{% extends "reviews/base.html" %}
+
+{% load static %}
+
+{% block title %} {{profile.user.first_name}} Reviews {% endblock %}
+
+{% block content %}
+<main class="main-index">
+	<!-- Breadcrumb and Title Section -->
+	<div class="b-example-divider"> </div>
+	<div class="container pt-5 pb-5">
+		<div class="row">
+			<h2>Search Results for "{{search}}".</h2>
+		</div>
+
+		<div class="row">
+			<div class="col-8">
+			{% for business in businesses %}
+				<div class="row card mb-4">
+					<div class="col-12 card-body">
+						<div class="row">
+							<div class="col-md-3 col-lg-2">
+								<img src="{{business.image.url}}" class="img-thumbnail" alt="{{business.name}} Business Image">
+							</div>
+							<div class="col-md-9 col-lg-10">
+								<div class="row">
+									<a class="text-decoration-none" href="{% url 'business-reviews' business.name|slugify business.id %}">{{business.name}} | {{business.website_name}}</a>
+								</div>
+								<div class="row d-flex pt-1">
+									<div class="col d-flex">
+									{% if business.rating > 4.5  %}
+	                                    <i class="fas fa-star fa-lg text-success"></i>
+	                                    <i class="fas fa-star fa-lg text-success"></i>
+	                                    <i class="fas fa-star fa-lg text-success"></i>
+	                                    <i class="fas fa-star fa-lg text-success"></i>
+	                                    <i class="fas fa-star fa-lg text-success"></i>
+	                            	{% elif business.rating > 3.5 %}
+	                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+	                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+	                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+	                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                            	{% elif business.rating > 2.5 %}
+	                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+	                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+	                                    <i class="fas fa-star fa-lg text-success text-opacity-75"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                            	{% elif business.rating > 1.5 %}
+	                                    <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+	                                    <i class="fas fa-star fa-lg text-danger text-opacity-75"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                            	{% elif business.rating > 0.0 %}
+	                                    <i class="fas fa-star fa-lg text-danger"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                            	{% else %}
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                                    <i class="far fa-star fa-lg text-muted"></i>
+	                            	{% endif %}
+	                            		<span class="text-muted ps-2"> {{business.rating}} Average Score | {{business.reviews_count}} Reviews | <a href="{% url 'review-business' business.name|slugify business.id %}">write a Review</a></span>
+	                                </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% empty %}
+				<div class="row text-center">
+					<h4 class="text-muted"> No Business Found</h4>
+				</div>
+			{% endfor %}
+			</div>
+
+			<div class="col-4">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-12">
+								<h5>Categories Results</h5>
+							</div>
+							<div class="col-12">
+								<ul class="list-group">
+								{% for cat in categories1 %}
+									<li class="list-group-item">
+										<a href="{% url 'category-reviews' cat.name|slugify cat.id %}" class="text-decoration-none text-reset">{{cat.name}}</a>
+									</li>
+								{% empty %}
+									<li class="list-group-item text-center text-muted">
+										No Categories Found
+									</li>
+								{% endfor %}
+								</ul>
+							</div>
+						</div>
+						<div class="b-example-divider"> </div>
+					</div>
+				</div>
+				
+			</div>
+
+
+		</div>
+			
+	</div>
+	<!-- /Breadcrumb and Title Section End -->
+
+</main>
+{% endblock %}
