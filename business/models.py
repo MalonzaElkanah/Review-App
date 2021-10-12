@@ -150,6 +150,18 @@ class Business(models.Model):
 		else:
 			return 0
 
+	def category_rank(self):
+		businesses = self.category.my_businesses_ordered()
+		count = 1
+		for business in businesses:
+			if business.rating() == 0:
+				return None
+			else:
+				if business.id == self.id:
+					return count
+			count = count + 1
+		return None
+
 
 		
 
@@ -170,6 +182,21 @@ class Review(models.Model):
 
 	def user_reviews_count(self):
 		return Review.objects.filter(user=self.user.id).count()
+
+	def remarks(self):
+		rating = self.rating
+		if rating == 5:
+			return 'Excellent'
+		elif rating == 4:
+			return 'Great'
+		elif rating == 3:
+			return 'Average'
+		elif rating == 2:
+			return 'Poor'
+		elif rating == 1:
+			return 'Bad'
+		else:
+			return 'Bad'
 
 
 class Confirm_Email(models.Model):

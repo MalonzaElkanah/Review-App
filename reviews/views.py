@@ -83,8 +83,11 @@ def business_reviews(request, slug, business_id):
 	categories = Category.objects.all()
 	profile = get_profile(request.user)
 	business = Business.objects.get(id=int(business_id))
+	my_reviews = None
+	if profile is not None:
+		my_reviews = Review.objects.filter(business=int(business_id), user=request.user.id)
 	return render(request, 'reviews/business-reviews.html', {'business': business, 
-		'categories': categories, 'profile': profile})
+		'categories': categories, 'profile': profile, 'my_reviews': my_reviews})
 
 
 def profile_reviews(request, slug, user_id):
@@ -94,6 +97,18 @@ def profile_reviews(request, slug, user_id):
 	profile_view = UserProfile.objects.get(id=int(user_id))
 	return render(request, 'reviews/profile-reviews.html', {'profile_view': profile_view, 
 		'categories': categories, 'profile': profile})
+
+
+def my_review(request, slug, review_id):
+	reviews = Review.objects.filter(id=int(review_id))
+	review = None
+	if reviews.count() > 0:
+		review = reviews[0]
+	profile = get_profile(request.user)
+	# Initiate Categories
+	categories = Category.objects.all()
+	return render(request, "reviews/my-review.html", {"review": review, "profile": profile, 
+		"categories": categories})
 
 
 def search(request):
@@ -147,7 +162,7 @@ def review_business(request, slug, business_id):
 		# Redirect Url
 		url = 'review/' + slugify(title) + '/' + str(new_review.id) + '/'
 		# Ajax Response
-		return JsonResponse({"success": "Review Submitted.", "redirect": "../../../"+url})
+		return JsonResponse({"success": "Review Submitted.", "redirect": "../../../../"+url})
 	else:
 		# GET Data if any
 		rate = int(request.GET.get('rate', 0))
@@ -166,20 +181,6 @@ def my_reviews(request):
 	# Initiate Categories
 	categories = Category.objects.all()
 	return render(request, "reviews/my-reviews.html", {"reviews": reviews, "profile": profile, 
-		"categories": categories})
-
-
-@login_required(login_url='/login/')
-@user_passes_test(check_user_settings, login_url='/manage/')
-def my_review(request, slug, review_id):
-	reviews = Review.objects.filter(id=int(review_id))
-	review = None
-	if reviews.count() > 0:
-		review = reviews[0]
-	profile = UserProfile.objects.get(user=int(request.user.id))
-	# Initiate Categories
-	categories = Category.objects.all()
-	return render(request, "reviews/my-review.html", {"review": review, "profile": profile, 
 		"categories": categories})
 
 

@@ -118,7 +118,7 @@
 					<div class="card-body">
 
 						<div class="row d-flex justify-content-between">
-							<h5 class="col ms-2">Reviews <span class="text-muted">{{business.reviews_count}}</span></h5>
+							<h5 class="col ms-2">Reviews <span class="reviews-count text-muted">{{business.reviews_count}}</span></h5>
 							<div class="col d-flex align-items-center">
 								<label>Filter by: </label>
 								<a href="#" class="btn btn-outline-dark ms-2">Rating <i class="fas fa-plus-circle"></i></a>
@@ -129,17 +129,17 @@
 						<div class="row ms-2 pt-3">
 							<div class="row align-items-center">
 								<div class="form-check col-2">
-								  	<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+								  	<input class="form-check-input" type="checkbox" name="remarks-checkbox" id="remarksCheckboxExcellent" value="Excellent">
 								  	<label class="form-check-label" for="inlineCheckbox1">Excellent</label>
 								</div>
 								<div class="progress col-8" style="height: 10px;">
 								  <div class="progress-bar" role="progressbar" style="width: {{business.excellent_percentage}}%;" aria-valuenow="{{business.excellent_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
-								<div class="col-1">{{business.excellent_percentage}}%</div>
+								<div class="col-2">{{business.excellent_percentage}}%</div>
 							</div>
 							<div class="row align-items-center pt-2">
 								<div class="form-check col-2">
-								  	<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+								  	<input class="form-check-input" type="checkbox" name="remarks-checkbox" id="remarksCheckboxGreat" value="Great">
 								  	<label class="form-check-label" for="inlineCheckbox2">Great</label>
 								</div>
 								<div class="progress col-8" style="height: 10px;">
@@ -151,7 +151,7 @@
 							</div>
 							<div class="row align-items-center pt-2">
 								<div class="form-check col-2">
-								  	<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2">
+								  	<input class="form-check-input" type="checkbox" name="remarks-checkbox" id="remarksCheckboxAverage" value="Average">
 								  	<label class="form-check-label" for="inlineCheckbox3"> Average</label>
 								</div>
 								<div class="progress col-8" style="height: 10px;">
@@ -163,7 +163,7 @@
 							</div>
 							<div class="row align-items-center pt-2">
 								<div class="form-check col-2">
-								  	<input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
+								  	<input class="form-check-input" type="checkbox" name="remarks-checkbox" id="remarksCheckboxPoor" value="Poor">
 								  	<label class="form-check-label" for="inlineCheckbox4"> Poor</label>
 								</div>
 								<div class="progress col-8" style="height: 10px;">
@@ -176,7 +176,7 @@
 							<div class="row align-items-center pt-2">
 
 								<div class="form-check col-2">
-								  	<input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
+								  	<input class="form-check-input" type="checkbox" name="remarks-checkbox" id="remarksCheckboxBad" value="Bad">
 								  	<label class="form-check-label" for="inlineCheckbox4"> Bad</label>
 								</div>
 								<div class="progress col-8" style="height: 10px;">
@@ -188,26 +188,119 @@
 							</div>
 						</div>
 
-						<div class="row ms-2 pt-5">
-							<div class="d-grid gap-2 d-md-block">
-								<a href="#" class="btn btn-secondary mb-3">All Reviews</a>
-								<a href="#" class="btn btn-outline-dark mb-3">Customer Service</a>
-								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
-								<a href="#" class="btn btn-outline-dark mb-3">Quality</a>
-								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
-								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
-								<a href="#" class="btn btn-outline-dark mb-3">Quality</a>
-								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
-								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
-								<a href="#" class="btn btn-outline-dark mb-3">Quality</a>
-								<a href="#" class="btn btn-outline-dark mb-3">Company</a>
-							</div>
-						</div>
-
 					</div>
 				</div>
-				{% for review in business.my_reviews %}
-				<div class="row mt-3 card">
+				{% if my_reviews != None and my_reviews.count >= 0 %}
+				<div class="row pt-3"><hr></div>
+				<div class="row">
+					<h4>Your Reviews for {{business.name}}.</h4>
+				</div>
+				{% for review in my_reviews %}
+				<div class="row mt-3 card text-white bg-secondary">
+					<div class="card-body p-4">
+						<div class="row">
+							<div class="d-flex">
+                                <img src="{{review.user_profile.image.url}}" class="rounded-circle float-start" width="50px" height="50px" alt="e">
+                                <div class="px-3">
+                                	<div>{{review.user.first_name}}</div>
+                                	<div class="d-flex">
+                                		<small>
+                                			<i class="fas fa-pen"></i> 
+                                			<span class="">{{review.user_reviews_count}} reviews </span>
+                                			<i class="fas fa-map-marker-alt ps-2"></i> 
+                                			<span class=""> Nairobi, Ke</span>
+                                		</small>
+                                	</div>
+                                </div>
+                            </div>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row">
+							<div class="row justify-content-between">
+							{% if review.rating == 5 %}
+								<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="fas fa-star fa-lg"></i>
+                                </div>
+                            {% elif review.rating == 4 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                </div>
+                            {% elif review.rating == 3 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                </div>
+                            {% elif review.rating == 2 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                </div>
+                            {% elif review.rating == 1 %}
+                            	<div class="col d-flex">
+                                    <i class="fas fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                </div>
+                            {% else %}
+                            	<div class="col d-flex">
+                                    <i class="far fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                    <i class="far fa-star fa-lg"></i>
+                                </div>
+                            {% endif %}
+                                <div class="col text-end">{{review.date_created|timesince}} Ago</div>
+							</div>
+						</div>
+						<div class="row pt-2">
+							<h5 class="card-title">{{review.title}}</h5>
+							<p class="card-text">{{review.review}}</p>
+						</div>
+						<div class="row pt-2 mx-1">
+							<hr>
+						</div>
+						<div class="row justify-content-between pt-0">
+							<div class="col">
+								<small>
+									<a class="card-link text-decoration-none text-reset" href="{% url 'edit-review' review.title|slugify review.id %}"> <i class="far fa-edit"></i> Edit</a>
+									<a class="card-link text-decoration-none text-reset" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="far fa-trash-alt ms-2"></i> Delete</a>
+									<i class="fas fa-share-alt ms-2"></i> Share
+								</small>
+							</div>
+						</div>
+						<a class="stretched-link" href="{% url 'my-review' review.title|slugify review.id %}"></a>
+					</div>
+				</div>
+				{% endfor %}
+				<div class="row pt-3"><hr></div>
+				<div class="row">
+					<h4>Other Reviews for {{business.name}}.</h4>
+				</div>
+
+				{% endif %}
+
+				{% for review in business.my_reviews reversed %}
+				{% if review.user.id != user.id %}
+				<div class="row mt-3 card reviews-all review-{{review.remarks}}">
 					<div class="card-body p-4">
 						<div class="row">
 							<div class="d-flex">
@@ -303,9 +396,14 @@
 							</div>
 							
 						</div>
-						<a class="stretched-link" href="#"></a>
+						<a class="stretched-link" href="{% url 'my-review' review.title|slugify review.id %}"></a>
 					</div>
 				</div>
+				{% endif %}
+				{% empty %}
+					<div class="row mt-3 text-center">
+						<p>{{business.name}} has not been Reviewed yet. </p>
+					</div>
 				{% endfor %}
 				<div class="b-example-divider"> </div>
 			</div>
@@ -357,7 +455,12 @@
 							<div class="col-12">
 								<p>
 									<strong>{{business.name}}</strong> is 
-									<strong>2 out of 60 ranked</strong> companies in the 
+									{% if business.category_rank == None %}
+									<strong>Not ranked</strong> Among
+									{% else %}
+									<strong>{{business.category_rank}} out of {{business.category.my_businesses.count}} ranked</strong> 
+									{% endif %}
+									companies in the 
 									<a href="#">category {{business.category.name}}</a> on Bizview
 								</p>
 							</div>
@@ -393,7 +496,7 @@
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
 			$("#rate-star_1").addClass("fas fa-star fa-3x text-danger");
 			$("#rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");	
-		  	window.location.href = "../../../review/{{business.name|slugify}}/{{business.id}}/?rate=1";
+		  	window.location.href = "../../../write/review/{{business.name|slugify}}/{{business.id}}/?rate=1";
 		});
 
 		// Hover rate-star_2
@@ -412,7 +515,7 @@
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
 			$("#rate-star_1, #rate-star_2").addClass("fas fa-star fa-3x text-danger text-opacity-75");
 			$("#rate-star_3, #rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star");	
-		  	window.location.href = "../../../review/{{business.name|slugify}}/{{business.id}}/?rate=2";
+		  	window.location.href = "../../../write/review/{{business.name|slugify}}/{{business.id}}/?rate=2";
 		});
 
 		// Hover rate-star_3
@@ -431,7 +534,7 @@
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
 			$("#rate-star_1, #rate-star_2, #rate-star_3").addClass("fas fa-star fa-3x text-success text-opacity-50");	
 			$("#rate-star_4, #rate-star_5").addClass("far fa-star fa-3x text-muted rate-star"); 
-		  	window.location.href = "../../../review/{{business.name|slugify}}/{{business.id}}/?rate=3";	
+		  	window.location.href = "../../../write/review/{{business.name|slugify}}/{{business.id}}/?rate=3";	
 		});
 
 		// Hover rate-star_4
@@ -450,7 +553,7 @@
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4").addClass("fas fa-star fa-3x text-success text-opacity-75");	
 			$("#rate-star_5").addClass("far fa-star fa-3x text-muted rate-star"); 
-		  	window.location.href = "../../../review/{{business.name|slugify}}/{{business.id}}/?rate=4";
+		  	window.location.href = "../../../write/review/{{business.name|slugify}}/{{business.id}}/?rate=4";
 		});
 
 		// Hover rate-star_5
@@ -467,8 +570,31 @@
 			$(this).off('mouseenter mouseleave');
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").removeClass();
 			$("#rate-star_1, #rate-star_2, #rate-star_3, #rate-star_4, #rate-star_5").addClass("fas fa-star fa-3x text-success");
-		  	window.location.href = "../../../review/{{business.name|slugify}}/{{business.id}}/?rate=5";
+		  	window.location.href = "../../../write/review/{{business.name|slugify}}/{{business.id}}/?rate=5";
 		});
+
+		// Filter Reviews by Remarks
+		$("input[name=remarks-checkbox]").change(function(){
+			$(".reviews-all").hide();
+			var num = 0;
+			$("input:checkbox[name=remarks-checkbox]:checked").each(function(){
+				var data = $(this).val();
+				var $items = $(".review-"+data);
+				if ($items.length){
+					$(".review-"+data).show();
+					num = num + parseInt($(".review-"+data).length);
+				}
+			});
+			$(".reviews-count").html(num);
+		});
+
+		// Load Default Filter on Load
+		$(function() {
+			$(".reviews-all").show();
+			$("input:checkbox[name=remarks-checkbox]").each(function(){
+				$(this).prop('checked', true);
+			});
+		})
 
 		function reviewBusiness(rate){
 			alert(rate);
