@@ -1,1 +1,1 @@
-web: gunicorn mytasks.wsgi
+web: gunicorn reviews.wsgi
