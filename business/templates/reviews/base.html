@@ -7,8 +7,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Frameworks CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/00b6dc780b.js" crossorigin="anonymous"></script>
+        <!--
         <link href="{% static 'main/bundles/bootstrap-5.1.1-dist/css/bootstrap.min.css' %}" rel="stylesheet">
         <link href="{% static 'main/bundles/fontawesome-free-5.15.4-web/css/all.css' %}" rel="stylesheet">
+        -->
 
         <!-- Custom CSS -->
         <link href="{% static 'main/css/style.css' %}" rel="stylesheet">
@@ -163,9 +167,14 @@
 
 
         <!-- Frameworks JS -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script> -->
-        <script src="{% static 'main/js/jquery-3.6.0.min.js' %}"></script>
+        <!-- 
         <script src="{% static 'main/bundles/bootstrap-5.1.1-dist/js/bootstrap.min.js' %}"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script> 
+        -->
+        <script src="{% static 'main/js/jquery-3.6.0.min.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 
         <!-- Page-Specific JS -->
         {% block javascript %}
