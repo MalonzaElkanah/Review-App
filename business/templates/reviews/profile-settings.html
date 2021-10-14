@@ -18,7 +18,7 @@
 				  	</ol>
 				</nav>
 				<div class="row">
-					<div class="col-6">
+					<div class="col-lg-6 col-md-8 col-sm-12">
 						<div class="row">
 							<div class="col-3">
 								<img src="{{profile.image.url}}" class="img-thumbnail" alt="...">
@@ -29,7 +29,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6">
+					<div class="col-lg-6 col-md-8 col-sm-12">
 						<div class="row">
 							<div class="col-4">
 								<h2>0</h2>
@@ -78,7 +78,7 @@
 					{% csrf_token %}
 					<input type="hidden" name="user" value="{{user.id}}">
 					<div class="row pb-4">	
-						<div class="col-6">
+						<div class="col-lg-6 col-md-8 col-sm-12">
 							<label for="imageFile" class="form-label">Profile Image</label>
 						{% for field in form %}
 							{% if field.name == 'image' %}
@@ -88,17 +88,17 @@
 						</div>	
 					</div>
 					<div class="row">
-						<div class="col-6 pb-4">
+						<div class="col-lg-6 col-md-8 col-sm-12 pb-4">
 							<label for="emailField" class="form-label">Email</label>
 							<input type="email" name="email" id="emailField" class="form-control" value="{{user.email}}" required="">
 						</div>
-						<div class="col-6 pb-4">
+						<div class="col-lg-6 col-md-8 col-sm-12 pb-4">
 							<label for="nameField" class="form-label">Display Name</label>
 							<input type="text" name="name" id="nameField" class="form-control" value="{{user.first_name}}" required="">
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-6 pb-4">
+						<div class="col-lg-6 col-md-8 col-sm-12 pb-4">
 							<label for="languageField" class="form-label">Language</label>
 							<select id="languageField" class="form-control" name="language">
 								<option value="{{profile.language}}" selected="">{{profile.language}}</option>
@@ -109,7 +109,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-6">
+						<div class="col-lg-6 col-md-8 col-sm-12">
 							<button type="submit" class="btn btn-primary">UPDATE INFOMATION</button>
 						</div>
 					</div>

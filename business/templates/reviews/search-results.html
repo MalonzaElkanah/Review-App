@@ -14,15 +14,15 @@
 		</div>
 
 		<div class="row">
-			<div class="col-8">
+			<div class="col-lg-8 col-md-12 col-sm-12">
 			{% for business in businesses %}
 				<div class="row card mb-4">
 					<div class="col-12 card-body">
 						<div class="row">
-							<div class="col-md-3 col-lg-2">
+							<div class="col-sm-12 col-md-3 col-lg-2">
 								<img src="{{business.image.url}}" class="img-thumbnail" alt="{{business.name}} Business Image">
 							</div>
-							<div class="col-md-9 col-lg-10">
+							<div class="col-sm-12 col-md-9 col-lg-10">
 								<div class="row">
 									<a class="text-decoration-none" href="{% url 'business-reviews' business.name|slugify business.id %}">{{business.name}} | {{business.website_name}}</a>
 								</div>
@@ -65,7 +65,7 @@
 	                                    <i class="far fa-star fa-lg text-muted"></i>
 	                                    <i class="far fa-star fa-lg text-muted"></i>
 	                            	{% endif %}
-	                            		<span class="text-muted ps-2"> {{business.rating}} Average Score | {{business.reviews_count}} Reviews | <a href="{% url 'review-business' business.name|slugify business.id %}">write a Review</a></span>
+	                            		<p class="text-muted ps-2"> {{business.rating}} Average Score | {{business.reviews_count}} Reviews | <a href="{% url 'review-business' business.name|slugify business.id %}">write a Review</a></p>
 	                                </div>
 								</div>
 							</div>
@@ -79,7 +79,7 @@
 			{% endfor %}
 			</div>
 
-			<div class="col-4">
+			<div class="col-lg-4 col-md-12 col-sm-12">
 				<div class="card">
 					<div class="card-body">
 						<div class="row">

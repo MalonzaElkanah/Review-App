@@ -35,7 +35,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-start">
+                <div class="collapse navbar-collapse justify-content-start" id="navbarCollapse">
                     <form class="d-flex" method="get" action="{% url 'search' %}">
                         <input class="form-control" type="search" name="search" placeholder="Search Business or Category" aria-label="Search">
                     </form>
@@ -45,7 +45,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown me-5">
                             <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
                             {% for category in categories %}
@@ -54,7 +54,7 @@
                             </ul>
                         </li>
                     {% if user.is_authenticated %}
-                        <li class="nav-item dropdown ms-5">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle link-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {% if profile != None %}
                                 <img src="{{profile.image.url}}" alt="" width="30" height="30" class="rounded-circle d-inline-block">
@@ -71,7 +71,7 @@
                             </ul>
                         </li>
                     {% else %}
-                        <li class="nav-item ms-5">
+                        <li class="nav-item">
                             <a class="btn btn-outline-success" href="{% url 'login' %}" >Login/Sign-Up</a>
                         </li>
                     {% endif %}
@@ -92,7 +92,7 @@
         <div class="container-fluid" style="background-color: #000032">
             <footer class="py-5">
                 <div class="row">
-                    <div class="col-2 ms-4">
+                    <div class="col-lg-2 col-md-4 col-sm-6 ms-4">
                         <h5 class="footer-head">About</h5>
                         <ul class="nav flex-column">
                             <li class="nav-item mb-2">
@@ -116,7 +116,7 @@
                         </ul>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-4 col-sm-6 ms-4">
                         <h5 class="footer-head">Categories</h5>
                         <ul class="nav flex-column">
                         {% for category in categories %}
@@ -127,14 +127,13 @@
                         </ul>
                     </div>
 
-                    <div class="col-4 offset-1">
+                    <div class="col-lg-4 col-md-6 col-sm-12 ms-4">
                         <form method="get" action="{% url 'search' %}">
                             <h5 class="footer-head">Search for company or category</h5>
                             <p class="footer-p">Read reviews. Write reviews. Find companies.</p>
-                            <div class="d-flex w-100 gap-2">
-                                <label for="newsletter1" class="visually-hidden">Company or Category</label>
-                                <input id="newsletter1" type="text" class="form-control" placeholder="Company or Category">
-                                <button type="submit" class="btn btn-primary" type="button">Search</button>
+                            <div class="input-group">
+                                <input type="search" class="form-control" name="search" placeholder="Business or Category">
+                                <button type="submit" class="btn btn-primary">Search</button>
                             </div>
                         </form>
                     </div>

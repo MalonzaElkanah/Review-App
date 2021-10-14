@@ -18,7 +18,7 @@
 				  	</ol>
 				</nav>
 				<div class="row">
-					<div class="col-6">
+					<div class="col-lg-6 col-md-8 col-sm-12">
 						<div class="row">
 							<div class="col-3">
 								<img src="{{profile.image.url}}" class="img-thumbnail" alt="...">
@@ -29,7 +29,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6">
+					<div class="col-lg-6 col-md-8 col-sm-12">
 						<div class="row">
 							<div class="col-4">
 								<h2>{{profile.my_reviews_count}}</h2>
@@ -66,7 +66,7 @@
 	<div class="b-example-divider"> </div>
 	<div class="container">
 		<div class="row">
-			<div class="col-8">
+			<div class="col-lg-8 col-md-10 col-sm-12">
 			{% for review in reviews %}
 				<label>Review of <a href="{% url 'business-reviews' review.business.name|slugify review.business.id %}">{{review.business.name}}</a> </label>
 				<div class="row mb-3 card">
@@ -164,6 +164,10 @@
 						</div>
 						<a class="stretched-link" href="{% url 'my-review' review.title|slugify review.id %}"></a>
 					</div>
+				</div>
+			{% empty %}
+				<div class="row text-center">
+					You have not reviewed any Business.
 				</div>
 			{% endfor %}
 			</div>

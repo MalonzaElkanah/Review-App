@@ -22,12 +22,12 @@
 				  	</ol>
 				</nav>
 				<div class="row">
-					<div class="col-8">
+					<div class="col-lg-8 col-sm-12">
 						<div class="row">
-							<div class="col-3">
+							<div class="col-lg-3 col-sm-12">
 								<img src="{{business.image.url}}" class="img-thumbnail" alt="{{business.name}} Business Image">
 							</div>
-							<div class="col-8">
+							<div class="col-lg-9 col-sm-12">
 								<h1>{{business.name}}</h1>
 								<p class="text-muted">Reviews {{business.reviews_count}} | <span>{{business.rating_remarks}}</span></p>
 								<div class="d-flex">
@@ -73,7 +73,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-4">
+					<div class="col-lg-4 col-sm-12 pt-4">
 						<ul class="list-group">
 							<li class="list-group-item d-flex justify-content-between">
 							    <div class="ms-2 me-auto">
@@ -95,15 +95,15 @@
 	<div class="container">
 		<div class="row">
 			<!-- Reviews Section Start -->
-			<div class="col-8">
+			<div class="col-lg-8 col-sm-12">
 				<div class="row card">
-					<div class="card-body d-flex justify-content-between p-4">
-						<div class="d-flex align-items-center">
+					<div class="card-body row ps-4 pt-2">
+						<div class="col-lg-7 col-md-5 col-sm-12 d-flex align-items-center pt-2">
 
 							<i class="fas fa-user-circle fa-3x text-muted"></i>
 							<a href="{% url 'review-business' business.name|slugify business.id %}" class="ms-3">Write a review</a>
 						</div>
-						<div class="d-flex">
+						<div class="col-lg-4 col-md-6 col-sm-12 d-flex pt-2">
 	                        <i id="rate-star_1" class="far fa-star fa-3x text-muted rate-star"></i>
 	                        <i id="rate-star_2" class="far fa-star fa-3x text-muted rate-star"></i>
 	                        <i id="rate-star_3" class="far fa-star fa-3x text-muted rate-star"></i>
@@ -128,61 +128,61 @@
 
 						<div class="row ms-2 pt-3">
 							<div class="row align-items-center">
-								<div class="form-check col-2">
+								<div class="form-check col-lg-2 col-sm-12">
 								  	<input class="form-check-input" type="checkbox" name="remarks-checkbox" id="remarksCheckboxExcellent" value="Excellent">
 								  	<label class="form-check-label" for="inlineCheckbox1">Excellent</label>
 								</div>
-								<div class="progress col-8" style="height: 10px;">
+								<div class="progress col-lg-8 col-sm-9" style="height: 10px;">
 								  <div class="progress-bar" role="progressbar" style="width: {{business.excellent_percentage}}%;" aria-valuenow="{{business.excellent_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
-								<div class="col-2">{{business.excellent_percentage}}%</div>
+								<div class="col-lg-2 col-sm-3">{{business.excellent_percentage}}%</div>
 							</div>
 							<div class="row align-items-center pt-2">
-								<div class="form-check col-2">
+								<div class="form-check col-lg-2 col-sm-12">
 								  	<input class="form-check-input" type="checkbox" name="remarks-checkbox" id="remarksCheckboxGreat" value="Great">
 								  	<label class="form-check-label" for="inlineCheckbox2">Great</label>
 								</div>
-								<div class="progress col-8" style="height: 10px;">
+								<div class="progress col-lg-8 col-sm-9" style="height: 10px;">
 									<div class="progress-bar" role="progressbar" style="width: {{business.great_percentage}}%;" aria-valuenow="{{business.great_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
-								<div class="col-1">
+								<div class="col-lg-2 col-sm-3">
 									{{business.great_percentage}}%
 								</div>
 							</div>
 							<div class="row align-items-center pt-2">
-								<div class="form-check col-2">
+								<div class="form-check col-lg-2 col-sm-12">
 								  	<input class="form-check-input" type="checkbox" name="remarks-checkbox" id="remarksCheckboxAverage" value="Average">
 								  	<label class="form-check-label" for="inlineCheckbox3"> Average</label>
 								</div>
-								<div class="progress col-8" style="height: 10px;">
+								<div class="progress col-lg-8 col-sm-9" style="height: 10px;">
 									<div class="progress-bar" role="progressbar" style="width: {{business.average_percentage}}%;" aria-valuenow="{{business.average_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
-								<div class="col-1">
+								<div class="col-lg-2 col-sm-3">
 									{{business.average_percentage}}%
 								</div>
 							</div>
 							<div class="row align-items-center pt-2">
-								<div class="form-check col-2">
+								<div class="form-check col-lg-2 col-sm-12">
 								  	<input class="form-check-input" type="checkbox" name="remarks-checkbox" id="remarksCheckboxPoor" value="Poor">
 								  	<label class="form-check-label" for="inlineCheckbox4"> Poor</label>
 								</div>
-								<div class="progress col-8" style="height: 10px;">
+								<div class="progress col-lg-8 col-sm-9" style="height: 10px;">
 									<div class="progress-bar" role="progressbar" style="width: {{business.poor_percentage}}%;" aria-valuenow="{{business.poor_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
-								<div class="col-1">
+								<div class="col-lg-2 col-sm-3">
 									{{business.poor_percentage}}%
 								</div>
 							</div>
 							<div class="row align-items-center pt-2">
 
-								<div class="form-check col-2">
+								<div class="form-check col-lg-2 col-sm-12">
 								  	<input class="form-check-input" type="checkbox" name="remarks-checkbox" id="remarksCheckboxBad" value="Bad">
 								  	<label class="form-check-label" for="inlineCheckbox4"> Bad</label>
 								</div>
-								<div class="progress col-8" style="height: 10px;">
+								<div class="progress col-lg-8 col-sm-9" style="height: 10px;">
 									<div class="progress-bar" role="progressbar" style="width: {{business.bad_percentage}}%;" aria-valuenow="{{business.bad_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
-								<div class="col-1">
+								<div class="col-lg-2 col-sm-3">
 									{{business.bad_percentage}}%
 								</div>
 							</div>
@@ -190,7 +190,7 @@
 
 					</div>
 				</div>
-				{% if my_reviews != None and my_reviews.count >= 0 %}
+				{% if my_reviews != None and my_reviews.count > 0 %}
 				<div class="row pt-3"><hr></div>
 				<div class="row">
 					<h4>Your Reviews for {{business.name}}.</h4>
@@ -410,7 +410,7 @@
 			<!-- /Reviews Section End -->
 
 			<!-- Business-Info Section Start -->
-			<div class="col-4">
+			<div class="col-lg-4 col-sm-12">
 				<div class="card">
 					<div class="card-body">
 						<div class="row pt-2">
@@ -468,10 +468,12 @@
 					</div>
 				</div>
 			</div>
+
 			<!-- /Business-Info Section End -->
 
 		</div>
 		</div>
+		<div class="b-example-divider"> </div>
 	</div>
 	<!-- /Content Section Start -->
 

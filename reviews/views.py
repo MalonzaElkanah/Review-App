@@ -274,6 +274,7 @@ def update_details(request):
 			return HttpResponse(form.errors)
 		user = request.user
 		user.username = request.POST['name']
+		user.first_name = request.POST['name']
 		user.email = request.POST['email']
 		user.save()
 		return redirect('update-user')
