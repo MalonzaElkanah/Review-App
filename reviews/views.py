@@ -9,13 +9,16 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.text import slugify
 from django.db.models import Q
 
-from business.models import Category, Business, Review, UserProfile, Confirm_Email
+from business.models import Category, Business, Review, UserProfile, Confirm_Email, EmailApp
 from business.forms import UserProfileForm
 from . import settings
 
 # Create your views here.
 from validate_email import validate_email
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import random
+import smtplib, ssl
 
 
 # Function to check if user has a profile for user_passes_test
@@ -273,7 +276,7 @@ def update_details(request):
 		else:
 			return HttpResponse(form.errors)
 		user = request.user
-		user.username = request.POST['name']
+		user.username = request.POST['email']
 		user.first_name = request.POST['name']
 		user.email = request.POST['email']
 		user.save()
@@ -412,9 +415,76 @@ def send_code_email(email, name):
 		'code': confirmation_code,
 	}
 	email_body = render_to_string(email_template_name, c)
+
+
+	send_emails = EmailApp.objects.all()
+	if send_emails.count() > 0:
+		app_email = send_emails[0]
+		smtp_server = app_email.smtp_server
+		port = app_email.port  # For starttls
+		sender_email = app_email.email
+		password = app_email.password
+		receiver_email = email
+		#message = email_body
+
+		message = MIMEMultipart("alternative")
+		message["Subject"] = subject
+		message["From"] = sender_email
+		message["To"] = email
+		
+		# Create the plain-text and HTML version of your message
+		html = """\
+		<html>
+		  <body>
+		    <p>Hi {name},<br>
+		       Thanks for signing up with BizReviews!<br>
+				Here’s the confirmation code you need to finish setting up your account: {code}<br>
+				<br>
+				Thanks again,<br>
+				BizReviews.<br>
+		    </p>
+		  </body>
+		</html>
+		"""
+
+		# Turn these into plain/html MIMEText objects
+		part1 = MIMEText(email_body, "plain")
+		part2 = MIMEText(html.format(name= name, code=confirmation_code), "html")
+
+		# Add HTML/plain-text parts to MIMEMultipart message
+		# The email client will try to render the last part first
+		message.attach(part1)
+		message.attach(part2)
+
+
+
+		# Create a secure SSL context
+		context = ssl.create_default_context()
+
+		# Try to log in to server and send email
+		try:
+			server = smtplib.SMTP(smtp_server,port)
+			server.ehlo() # Can be omitted
+			server.starttls(context=context) # Secure the connection
+			server.ehlo() # Can be omitted
+			server.login(sender_email, password)
+			# Send email
+			server.sendmail(sender_email, receiver_email, message.as_string())
+		except Exception as e:
+			# Print any error messages to stdout
+			print(e)
+			return False
+		finally:
+			server.quit()
+		return True
+	else:
+		return False
+
+
+'''
 	try:
 		send_mail(subject, email_body, 'admin@example.com' , [email], fail_silently=False)
 	except BadHeaderError:
 		return False
 	return True
-
+	'''

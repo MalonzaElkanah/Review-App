@@ -205,3 +205,12 @@ class Confirm_Email(models.Model):
 	name = models.CharField('Name', max_length=20, null=True)
 	date_created = models.DateTimeField('Date Created', auto_now_add=True)
 	# email, code, name
+
+
+class EmailApp(models.Model):
+	smtp_server = models.CharField('SMTP SERVER', max_length=100)
+	port = models.IntegerField('Port', default=587)
+	email = models.CharField('App Email', max_length=100, default='malonetechnologies101.com')
+	password = models.CharField('Password', max_length=200)
+	# smtp_server, port, email, password
+	
