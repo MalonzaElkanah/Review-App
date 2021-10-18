@@ -480,11 +480,3 @@ def send_code_email(email, name):
 	else:
 		return False
 
-
-'''
-	try:
-		send_mail(subject, email_body, 'admin@example.com' , [email], fail_silently=False)
-	except BadHeaderError:
-		return False
-	return True
-	'''
