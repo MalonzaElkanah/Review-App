@@ -336,20 +336,10 @@ def check_email(request):
 			data = Confirm_Email(email=email, code=confirmation_code, name=name)
 			data.save()
 			# Send the Code to User Email
-			subject = "Use code " + confirmation_code + " to set up your BizReviews account"
-			email_template_name = "email/confirmation_code_new_user.txt"
-			c = {
-				"email": email,
-				'name': name,
-				'code': confirmation_code,
-			}
-			email_body = render_to_string(email_template_name, c)
-			try:
-				send_mail(subject, email_body, 'admin@example.com' , [email], fail_silently=False)
-			except BadHeaderError:
-				return JsonResponse({"error": "Invalid Header Found."})
-			# Return Success
-			return JsonResponse({"success": "Wait for Confirm Code in Your Email."})
+			if send_code_email(email, name):
+				return JsonResponse({"success": "Wait for Confirm Code in Your Email."})
+			else:
+				return JsonResponse({"error": "Error Occured in sending Email"})
 		elif int(request.GET['step']) == 2:
 			# Get User Data
 			email = request.GET['email']
