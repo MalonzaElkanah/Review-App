@@ -456,8 +456,6 @@ def send_code_email(email, name):
 		message.attach(part1)
 		message.attach(part2)
 
-
-
 		# Create a secure SSL context
 		context = ssl.create_default_context()
 
