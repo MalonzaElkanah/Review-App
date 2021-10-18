@@ -362,6 +362,7 @@ def check_email(request):
 						user.first_name = name
 						user.save()
 					else:
+						user.first_name = name
 						user.set_password(code)
 						user.save()
 					# Login User
