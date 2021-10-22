@@ -48,6 +48,13 @@ LOGIN_REDIRECT_URL = '/manage/'
 LOGOUT_REDIRECT_URL = '/'
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
+#
+# Google Drive Storage Settings
+#
+
+GOOGLE_DRIVE_STORAGE_SERVICE_EMAIL  =  "elkanahmalonza@gmail.com" 
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = os.path.join(BASE_DIR , "reviews/client_secret1.json")
+GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = 'review-app' # OPTIONAL
 
 
 # Application definition
@@ -61,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'business.apps.BusinessConfig',
     'social_django',
+    'gdstorage',
 ]
 
 MIDDLEWARE = [

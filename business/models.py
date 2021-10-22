@@ -5,10 +5,16 @@ from django.db.models import Avg
 from urllib.parse import urlparse
 
 
+from  gdstorage.storage  import  GoogleDriveStorage
+
+# Define Google Drive Storage
+gd_storage = GoogleDriveStorage()
+
+
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	image = models.ImageField('Profile Image', upload_to='Image/Settings/ProfileImages', 
-		max_length=500, default='Image/Settings/ProfileImages/dummy.png')
+		max_length=500, default='Image/Settings/ProfileImages/dummy.png', storage=gd_storage)
 	language = models.CharField('Langauge', default='English', max_length=50)
 	# user, image, language
 
@@ -54,7 +60,7 @@ class Category(models.Model):
 class Business(models.Model):
 	name = models.CharField('Business Name', max_length=50, unique=True)
 	image = models.ImageField('Image', upload_to='Image/Business/Profile/', max_length=500, 
-		default='dummy.png')
+		default='dummy.png', storage=gd_storage)
 	category = models.ForeignKey(Category, on_delete=models.CASCADE)
 	description = models.CharField('Description', max_length=1200, blank=True)
 	website = models.CharField('Website', max_length=150, blank=True, null=True)
